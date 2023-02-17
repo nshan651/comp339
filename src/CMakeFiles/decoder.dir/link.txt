@@ -1,0 +1,1 @@
+/usr/bin/c++ -g CMakeFiles/decoder.dir/decoder.cc.o CMakeFiles/decoder.dir/utils.cc.o -o ../bin/decoder  -lm 

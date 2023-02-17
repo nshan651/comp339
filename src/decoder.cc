@@ -14,30 +14,5 @@ The decoder does the following:
     - You can also write the decoder to succeed if most of the words are decoded. This could be an additional command line option, e.g. --threshold=percentage.
 */
 {
-    /* The threshold for the number of matching words in a shift */
-    int threshold = words.size();
-    int shift = 0;
-
-    for (shift = 1; shift <= ALPHABET_SIZE; shift++) {
-        int matches = 0;
-        for (string &word : words) {
-            string candidate;
-            for (size_t i = 0; i < word.length(); i++) {
-                char c = word[i];
-                if(c >= 'A' && c <= 'Z') {
-                    c -= shift;
-                    if(c < 'A')
-                       c = c + 'Z' - 'A' + 1;
-                    candidate += c;
-                }
-            }
-            if (dictionary.count(candidate) > 0) {
-                matches++;
-                //cout << candidate << "\n";
-                if (matches >= threshold)
-                    return shift;
-            }
-        }
-    }
-    return shift;
+    return 0;
 }

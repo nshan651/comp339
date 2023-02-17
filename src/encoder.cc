@@ -12,18 +12,5 @@ The encoder does the following:
     -The output lines may either be directed to standard output or to a file.
 */
 {
-    for (string &word : words) {
-        string candidate;
-        for (size_t i = 0; i < word.length(); i++) {
-            char c = word[i];
-            if(c >= 'A' && c <= 'Z') {
-                c += shift;
-                if(c > 'Z')
-                   c = c - 'Z' + 'A' - 1;
-                candidate += c;
-            }
-        }
-        //cout << candidate << "\n";
-    }
-    return shift;
+    return 0;
 }

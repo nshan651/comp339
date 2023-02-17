@@ -1,0 +1,1 @@
+/usr/bin/c++ -g CMakeFiles/main.dir/main.cc.o CMakeFiles/main.dir/parse_args.cc.o -o ../bin/main  -Wl,-rpath,/home/nick/git/comp339/src libcommon.so 
