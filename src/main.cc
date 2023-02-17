@@ -8,9 +8,10 @@ int main(int argc, char **argv)
     parse_args(cipher, argc, argv);
 
     cipher.input_file = PROJ_DIR + "decrypt.txt";
+    /* cipher.encrypt = true; */ 
+
     /* cipher.input_file = PROJ_DIR + "encrypt.txt"; */
 
-    cipher.encrypt = true; 
 
     map<string, int> dictionary = parse_dict(cipher.dict_file);
     cipher.min_len = 1;

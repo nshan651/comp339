@@ -54,21 +54,12 @@ map<string, int> parse_dict(const string &filename)
     return words;
 }
 
-int encode(vector<string> &words, int shift)
+int encode(vector<string> &words, const int shift)
 /** Encodes a single line using a given shift value **/
 {
-    for (string &word : words) {
-        string candidate;
-        for (size_t i = 0; i < word.length(); i++) {
-            char c = word[i];
-            if(c >= 'A' && c <= 'Z') {
-                c += shift;
-                if(c > 'Z')
-                   c = c - 'Z' + 'A' - 1;
-                candidate += c;
-            }
-        }
-    }
+    for (string &word : words)
+        shift_right(word, shift);
+    
     return shift;
 }
 
@@ -81,23 +72,61 @@ int decode(vector<string> &words, map<string, int> &dictionary)
     for (shift = 1; shift <= ALPHABET_SIZE; shift++) {
         int matches = 0;
         for (string &word : words) {
-            string candidate;
-            for (size_t i = 0; i < word.length(); i++) {
-                char c = word[i];
-                if(c >= 'A' && c <= 'Z') {
-                    c -= shift;
-                    if(c < 'A')
-                       c = c + 'Z' - 'A' + 1;
-                    candidate += c;
-                }
-            }
+            string candidate = shift_left(word, shift);
             if (dictionary.count(candidate) > 0) {
                 matches++;
-                //cout << candidate << "\n";
-                if (matches >= threshold)
+                if (matches >= threshold) {
+                    print_output(shift_left, words, shift);
+                    /* for (string &res : words) */
+                    /*     cout << shift_left(res, shift) << " "; */
+
                     return shift;
+                }
             }
         }
     }
     return shift;
+}
+
+string shift_left(const string word, const int shift)
+/** Shift a word left */
+{
+    string candidate;
+    for (size_t i = 0; i < word.length(); i++) {
+        char c = word[i];
+        if(c >= 'A' && c <= 'Z') {
+            c -= shift;
+            if(c < 'A')
+               c = c + 'Z' - 'A' + 1;
+            candidate += c;
+        }
+    }
+    return candidate;
+}
+
+
+string shift_right(const string word, const int shift)
+/** Shift a word left */
+{
+    string candidate;
+    for (size_t i = 0; i < word.length(); i++) {
+        char c = word[i];
+        if(c >= 'A' && c <= 'Z') {
+            c += shift;
+            if(c > 'Z')
+               c = c - 'Z' + 'A' - 1;
+            candidate += c;
+        }
+    }
+    return candidate;
+}
+
+void print_output(Shifter func, vector<string> &words, const int shift)
+/** Print output **/
+{
+    cout << "SHIFT => " << shift << " WORDS => ";
+    for (string &res : words) {
+        string s = func(res, shift);
+        cout << s << " ";
+    }
 }

@@ -2,7 +2,7 @@
 
 using namespace std;
 
-int encoder(vector<string> &words, int shift)
+int main()
 /**
 The encoder does the following:
     - Loads the dictionary into a data structure (map/set). As words are loaded in, any words containing characters not in the alphabet will be discarded.
@@ -12,5 +12,28 @@ The encoder does the following:
     -The output lines may either be directed to standard output or to a file.
 */
 {
+    Cipher cipher;
+
+    // NOTE: Hard-coded, remove later!!!
+    cipher.min_len = 1;
+
+    parse_args(cipher, argc, argv);
+
+    ifstream file(cipher.input_file);
+    string line;
+    if (!file.is_open()) {
+        cerr << "Error opening file.";
+        return 1;
+    }
+    
+    while (getline(file, line)) {
+        vector<string> words = split_line(line, cipher.min_len);
+        /* Seed rng */
+        srand(time(0));
+        int shift = rand() % 25 + 1;
+        int result = encode(words, shift);
+        cout << "Shift Value: " << result << "\n";
+    }
+
     return 0;
 }

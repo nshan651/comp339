@@ -2,7 +2,7 @@
 
 using namespace std;
 
-int decoder(vector<string> &words, map<string, int> &dictionary)
+int main()
 /** 
 name output text (of shift values) to filename (if absent, write to standard output)
 The decoder does the following:
@@ -14,5 +14,27 @@ The decoder does the following:
     - You can also write the decoder to succeed if most of the words are decoded. This could be an additional command line option, e.g. --threshold=percentage.
 */
 {
+    Cipher cipher;
+
+    // NOTE: Hard-coded, remove later!!!
+    cipher.min_len = 1;
+
+    parse_args(cipher, argc, argv);
+
+    map<string, int> dictionary = parse_dict(cipher.dict_file);
+
+    ifstream file(cipher.input_file);
+    string line;
+    if (!file.is_open()) {
+        cerr << "Error opening file.";
+        return 1;
+    }
+    
+    while (getline(file, line)) {
+        vector<string> words = split_line(line, cipher.min_len);
+        int result = decode(words, dictionary);
+        cout << "Shift Value: " << result << "\n";
+    }
+
     return 0;
 }

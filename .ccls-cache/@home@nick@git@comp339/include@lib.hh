@@ -32,5 +32,12 @@ int decode(vector<string> &words, map<string, int> &dictionary);
 int encode(vector<string> &words, int shift);
 int parse_args(Cipher &cipher, int argc, char **argv);
 string convert_alpha(string &word);
+
+string shift_left(const string word, const int shift);
+string shift_right(const string word, const int shift);
+
+typedef string (*Shifter)(const string, const int);
+void print_output(Shifter func, vector<string> &words, const int shift);
+
 vector<string> split_line(string &line, const int min_len);
 map<string, int> parse_dict(const string &filename);
