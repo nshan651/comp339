@@ -2,6 +2,18 @@
 
 using namespace std;
 
+int rng(int min, int max) 
+/** Generates a random number given an upper and lower bound */
+{
+    // Create a random_device to generate a random seed
+    random_device rd;
+    // Use the seed to create a Mersenne Twister engine
+    mt19937 eng(rd());
+    uniform_int_distribution<> dist(min, max);
+
+    return dist(eng);
+}
+
 string convert_alpha(string &word)
 /** Convert each character to an upper-case american english letter */ 
 {
@@ -75,7 +87,7 @@ int decode(vector<string> &words, map<string, int> &dictionary)
             if (dictionary.count(candidate) > 0) {
                 matches++;
                 if (matches >= threshold) {
-                    print_output(shift_left, words, shift);
+                    /* print_output(shift_left, words, shift); */
                     return shift;
                 }
             }
@@ -117,7 +129,7 @@ string shift_right(const string word, const int shift)
     return candidate;
 }
 
-void print_output(Shifter func, vector<string> &words, const int shift)
+void handle_io(Shifter func, vector<string> &words, const int shift)
 /** Print output **/
 {
     cout << "SHIFT => " << shift << " WORDS => ";
@@ -125,4 +137,5 @@ void print_output(Shifter func, vector<string> &words, const int shift)
         string s = func(res, shift);
         cout << s << " ";
     }
+    cout << "\n";
 }

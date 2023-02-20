@@ -2,6 +2,32 @@
 
 using namespace std;
 
+ int gen_text(Cipher cipher, ostream& output)
+ /** Generate cipher text */
+ {
+     int words_per_line = 5;
+
+     map<string, int> dictionary = parse_dict(cipher.dict_file);
+
+     for (int i = 0; i < cipher.num_lines; i++) {
+       for (int j = 0; j < words_per_line; j++) {
+
+         int rand_index = rng(1, dictionary.size()-1);
+         int rand_shift = rng(1, 26);
+
+         auto iter = dictionary.begin();
+         advance(iter, rand_index);
+         string new_line = iter->first;
+
+         string encoded = shift_right(new_line, rand_shift);
+         output << encoded << " ";
+       }
+       output << "\n";
+     }
+     return 0;
+ }
+
+
 int main(int argc, char **argv)
 /**
 The encoder does the following:
@@ -16,56 +42,24 @@ The encoder does the following:
 
     // NOTE: Hard-coded, remove later!!!
     cipher.min_len = 1;
+    cipher.num_lines = 10;
+    cipher.output_file = "./data/ciphertext.txt";
 
-    int num_lines = 10;
-    int words_per_line = 5;
     parse_args(cipher, argc, argv);
 
-    ofstream file("./data/test.txt");
+    if (cipher.output_file == "") {
+        gen_text(cipher, cout);
+        return 0;
+    }
+
+    ofstream file(cipher.output_file);
     if (!file.is_open()) {
       cerr << "Failed to open file";
       return 1;
     }
+    gen_text(cipher, file);
+    file.close();
 
-    if (file.is_open()) {
-      map<string, int> dictionary = parse_dict(cipher.dict_file);
-      /* vector<vector<string>> values; */
-
-      for (int i = 0; i < num_lines; i++) {
-        /* vector<string> new_line; // To add to values */
-        string new_line;
-        for (int j = 0; j < words_per_line; j++) {
-          // Create a random_device to generate a random seed
-          random_device rd;
-          // Use the seed to create a Mersenne Twister engine
-          mt19937 eng(rd());
-          // Generate a random integer between 1 and dict size inclusive
-          uniform_int_distribution<> dist(1, dictionary.size()-1);
-
-          int random_index = dist(eng);
-
-          auto iter = dictionary.begin();
-          advance(iter, random_index);
-          new_line = iter->first;
-          file << new_line << " ";
-        }
-        file << "\n";
-      }
-    }
-
-    /*
-    if (!file.is_open()) {
-        cerr << "Error opening file.";
-        return 1;
-    }
-    
-    while (getline(file, line)) {
-        vector<string> words = split_line(line, cipher.min_len);
-        srand(time(0));
-        int shift = rand() % 26;
-        int result = encode(words, shift);
-    }
-    */
 
     return 0;
 }

@@ -25,10 +25,12 @@ struct Cipher {
     int num_lines;
     int min_len = 3;
     string dict_file = PROJ_DIR + "american-english";
-    string input_file = PROJ_DIR + "decrypt.txt";
-    string output_file; 
+    /* string input_file = PROJ_DIR + "decrypt.txt"; */
+    string input_file = "";
+    string output_file = ""; 
 };
 
+int rng(int min, int max);
 int decode(vector<string> &words, map<string, int> &dictionary);
 int encode(vector<string> &words, int shift);
 int parse_args(Cipher &cipher, int argc, char **argv);
@@ -38,7 +40,7 @@ string shift_left(const string word, const int shift);
 string shift_right(const string word, const int shift);
 
 typedef string (*Shifter)(const string, const int);
-void print_output(Shifter func, vector<string> &words, const int shift);
+void handle_io(Shifter func, vector<string> &words, const int shift);
 
 vector<string> split_line(string &line, const int min_len);
 map<string, int> parse_dict(const string &filename);

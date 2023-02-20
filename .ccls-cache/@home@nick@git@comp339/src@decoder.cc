@@ -2,6 +2,18 @@
 
 using namespace std;
 
+int decode_lines(Cipher cipher, istream& input)
+{
+    map<string, int> dictionary = parse_dict(cipher.dict_file);
+    string line;
+    while (getline(input, line)) {
+        vector<string> words = split_line(line, cipher.min_len);
+        int shift = decode(words, dictionary);
+        handle_io(shift_left, words, shift);
+    }
+    return 0;
+}
+
 int main(int argc, char **argv)
 /** 
 name output text (of shift values) to filename (if absent, write to standard output)
@@ -21,20 +33,20 @@ The decoder does the following:
 
     parse_args(cipher, argc, argv);
 
-    map<string, int> dictionary = parse_dict(cipher.dict_file);
+    cipher.input_file = "./data/ciphertext.txt";
+
+    if (cipher.input_file == "") {
+        decode_lines(cipher, cin);
+        return 0;
+    }
 
     ifstream file(cipher.input_file);
-    string line;
     if (!file.is_open()) {
         cerr << "Error opening file.";
         return 1;
     }
-    
-    while (getline(file, line)) {
-        vector<string> words = split_line(line, cipher.min_len);
-        int result = decode(words, dictionary);
-        /* cout << "Shift Value: " << result << "\n"; */
-    }
+    decode_lines(cipher, file);
+    file.close();
 
     return 0;
 }
