@@ -14,7 +14,7 @@ void gen_test(const string &filename, int num_lines, int words_per_line)
   ofstream file(filename);
   if (!file.is_open()) {
     cerr << "Failed to open file";
-    //return 1;
+    return 1;
   }
   
   map<string, int> dictionary = parse_dict(filename);

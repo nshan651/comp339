@@ -7,7 +7,7 @@ int main(int argc, char **argv)
     Cipher cipher;
     parse_args(cipher, argc, argv);
 
-    cipher.input_file = PROJ_DIR + "decrypt.txt";
+    /* cipher.input_file = PROJ_DIR + "decrypt.txt"; */
     /* cipher.encrypt = true; */ 
 
     /* cipher.input_file = PROJ_DIR + "encrypt.txt"; */

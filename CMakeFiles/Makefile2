@@ -134,6 +134,8 @@ _deps/googletest-build/googletest/clean: _deps/googletest-build/googletest/CMake
 # Recursive "all" directory target.
 src/all: src/CMakeFiles/common.dir/all
 src/all: src/CMakeFiles/main.dir/all
+src/all: src/CMakeFiles/decoder.dir/all
+src/all: src/CMakeFiles/encoder.dir/all
 .PHONY : src/all
 
 # Recursive "preinstall" directory target.
@@ -143,6 +145,8 @@ src/preinstall:
 # Recursive "clean" directory target.
 src/clean: src/CMakeFiles/common.dir/clean
 src/clean: src/CMakeFiles/main.dir/clean
+src/clean: src/CMakeFiles/decoder.dir/clean
+src/clean: src/CMakeFiles/encoder.dir/clean
 .PHONY : src/clean
 
 #=============================================================================
@@ -152,7 +156,7 @@ src/clean: src/CMakeFiles/main.dir/clean
 _deps/googletest-build/googlemock/CMakeFiles/gmock.dir/all: _deps/googletest-build/googletest/CMakeFiles/gtest.dir/all
 	$(MAKE) $(MAKESILENT) -f _deps/googletest-build/googlemock/CMakeFiles/gmock.dir/build.make _deps/googletest-build/googlemock/CMakeFiles/gmock.dir/depend
 	$(MAKE) $(MAKESILENT) -f _deps/googletest-build/googlemock/CMakeFiles/gmock.dir/build.make _deps/googletest-build/googlemock/CMakeFiles/gmock.dir/build
-	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --progress-dir=/home/nick/git/comp339/CMakeFiles --progress-num=3,4 "Built target gmock"
+	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --progress-dir=/home/nick/git/comp339/CMakeFiles --progress-num=9,10 "Built target gmock"
 .PHONY : _deps/googletest-build/googlemock/CMakeFiles/gmock.dir/all
 
 # Build rule for subdir invocation for target.
@@ -179,7 +183,7 @@ _deps/googletest-build/googlemock/CMakeFiles/gmock_main.dir/all: _deps/googletes
 _deps/googletest-build/googlemock/CMakeFiles/gmock_main.dir/all: _deps/googletest-build/googletest/CMakeFiles/gtest.dir/all
 	$(MAKE) $(MAKESILENT) -f _deps/googletest-build/googlemock/CMakeFiles/gmock_main.dir/build.make _deps/googletest-build/googlemock/CMakeFiles/gmock_main.dir/depend
 	$(MAKE) $(MAKESILENT) -f _deps/googletest-build/googlemock/CMakeFiles/gmock_main.dir/build.make _deps/googletest-build/googlemock/CMakeFiles/gmock_main.dir/build
-	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --progress-dir=/home/nick/git/comp339/CMakeFiles --progress-num=5,6 "Built target gmock_main"
+	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --progress-dir=/home/nick/git/comp339/CMakeFiles --progress-num=11,12 "Built target gmock_main"
 .PHONY : _deps/googletest-build/googlemock/CMakeFiles/gmock_main.dir/all
 
 # Build rule for subdir invocation for target.
@@ -205,7 +209,7 @@ _deps/googletest-build/googlemock/CMakeFiles/gmock_main.dir/clean:
 _deps/googletest-build/googletest/CMakeFiles/gtest.dir/all:
 	$(MAKE) $(MAKESILENT) -f _deps/googletest-build/googletest/CMakeFiles/gtest.dir/build.make _deps/googletest-build/googletest/CMakeFiles/gtest.dir/depend
 	$(MAKE) $(MAKESILENT) -f _deps/googletest-build/googletest/CMakeFiles/gtest.dir/build.make _deps/googletest-build/googletest/CMakeFiles/gtest.dir/build
-	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --progress-dir=/home/nick/git/comp339/CMakeFiles --progress-num=7,8 "Built target gtest"
+	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --progress-dir=/home/nick/git/comp339/CMakeFiles --progress-num=13,14 "Built target gtest"
 .PHONY : _deps/googletest-build/googletest/CMakeFiles/gtest.dir/all
 
 # Build rule for subdir invocation for target.
@@ -231,7 +235,7 @@ _deps/googletest-build/googletest/CMakeFiles/gtest.dir/clean:
 _deps/googletest-build/googletest/CMakeFiles/gtest_main.dir/all: _deps/googletest-build/googletest/CMakeFiles/gtest.dir/all
 	$(MAKE) $(MAKESILENT) -f _deps/googletest-build/googletest/CMakeFiles/gtest_main.dir/build.make _deps/googletest-build/googletest/CMakeFiles/gtest_main.dir/depend
 	$(MAKE) $(MAKESILENT) -f _deps/googletest-build/googletest/CMakeFiles/gtest_main.dir/build.make _deps/googletest-build/googletest/CMakeFiles/gtest_main.dir/build
-	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --progress-dir=/home/nick/git/comp339/CMakeFiles --progress-num=9,10 "Built target gtest_main"
+	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --progress-dir=/home/nick/git/comp339/CMakeFiles --progress-num=15,16 "Built target gtest_main"
 .PHONY : _deps/googletest-build/googletest/CMakeFiles/gtest_main.dir/all
 
 # Build rule for subdir invocation for target.
@@ -283,7 +287,7 @@ src/CMakeFiles/common.dir/clean:
 src/CMakeFiles/main.dir/all: src/CMakeFiles/common.dir/all
 	$(MAKE) $(MAKESILENT) -f src/CMakeFiles/main.dir/build.make src/CMakeFiles/main.dir/depend
 	$(MAKE) $(MAKESILENT) -f src/CMakeFiles/main.dir/build.make src/CMakeFiles/main.dir/build
-	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --progress-dir=/home/nick/git/comp339/CMakeFiles --progress-num=11,12,13 "Built target main"
+	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --progress-dir=/home/nick/git/comp339/CMakeFiles --progress-num=17,18,19 "Built target main"
 .PHONY : src/CMakeFiles/main.dir/all
 
 # Build rule for subdir invocation for target.
@@ -301,6 +305,58 @@ main: src/CMakeFiles/main.dir/rule
 src/CMakeFiles/main.dir/clean:
 	$(MAKE) $(MAKESILENT) -f src/CMakeFiles/main.dir/build.make src/CMakeFiles/main.dir/clean
 .PHONY : src/CMakeFiles/main.dir/clean
+
+#=============================================================================
+# Target rules for target src/CMakeFiles/decoder.dir
+
+# All Build rule for target.
+src/CMakeFiles/decoder.dir/all: src/CMakeFiles/common.dir/all
+	$(MAKE) $(MAKESILENT) -f src/CMakeFiles/decoder.dir/build.make src/CMakeFiles/decoder.dir/depend
+	$(MAKE) $(MAKESILENT) -f src/CMakeFiles/decoder.dir/build.make src/CMakeFiles/decoder.dir/build
+	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --progress-dir=/home/nick/git/comp339/CMakeFiles --progress-num=3,4,5 "Built target decoder"
+.PHONY : src/CMakeFiles/decoder.dir/all
+
+# Build rule for subdir invocation for target.
+src/CMakeFiles/decoder.dir/rule: cmake_check_build_system
+	$(CMAKE_COMMAND) -E cmake_progress_start /home/nick/git/comp339/CMakeFiles 5
+	$(MAKE) $(MAKESILENT) -f CMakeFiles/Makefile2 src/CMakeFiles/decoder.dir/all
+	$(CMAKE_COMMAND) -E cmake_progress_start /home/nick/git/comp339/CMakeFiles 0
+.PHONY : src/CMakeFiles/decoder.dir/rule
+
+# Convenience name for target.
+decoder: src/CMakeFiles/decoder.dir/rule
+.PHONY : decoder
+
+# clean rule for target.
+src/CMakeFiles/decoder.dir/clean:
+	$(MAKE) $(MAKESILENT) -f src/CMakeFiles/decoder.dir/build.make src/CMakeFiles/decoder.dir/clean
+.PHONY : src/CMakeFiles/decoder.dir/clean
+
+#=============================================================================
+# Target rules for target src/CMakeFiles/encoder.dir
+
+# All Build rule for target.
+src/CMakeFiles/encoder.dir/all: src/CMakeFiles/common.dir/all
+	$(MAKE) $(MAKESILENT) -f src/CMakeFiles/encoder.dir/build.make src/CMakeFiles/encoder.dir/depend
+	$(MAKE) $(MAKESILENT) -f src/CMakeFiles/encoder.dir/build.make src/CMakeFiles/encoder.dir/build
+	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --progress-dir=/home/nick/git/comp339/CMakeFiles --progress-num=6,7,8 "Built target encoder"
+.PHONY : src/CMakeFiles/encoder.dir/all
+
+# Build rule for subdir invocation for target.
+src/CMakeFiles/encoder.dir/rule: cmake_check_build_system
+	$(CMAKE_COMMAND) -E cmake_progress_start /home/nick/git/comp339/CMakeFiles 5
+	$(MAKE) $(MAKESILENT) -f CMakeFiles/Makefile2 src/CMakeFiles/encoder.dir/all
+	$(CMAKE_COMMAND) -E cmake_progress_start /home/nick/git/comp339/CMakeFiles 0
+.PHONY : src/CMakeFiles/encoder.dir/rule
+
+# Convenience name for target.
+encoder: src/CMakeFiles/encoder.dir/rule
+.PHONY : encoder
+
+# clean rule for target.
+src/CMakeFiles/encoder.dir/clean:
+	$(MAKE) $(MAKESILENT) -f src/CMakeFiles/encoder.dir/build.make src/CMakeFiles/encoder.dir/clean
+.PHONY : src/CMakeFiles/encoder.dir/clean
 
 #=============================================================================
 # Special targets to cleanup operation of make.

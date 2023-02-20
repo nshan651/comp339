@@ -3,8 +3,8 @@ file(REMOVE_RECURSE
   "../bin/decoder.pdb"
   "CMakeFiles/decoder.dir/decoder.cc.o"
   "CMakeFiles/decoder.dir/decoder.cc.o.d"
-  "CMakeFiles/decoder.dir/utils.cc.o"
-  "CMakeFiles/decoder.dir/utils.cc.o.d"
+  "CMakeFiles/decoder.dir/parse_args.cc.o"
+  "CMakeFiles/decoder.dir/parse_args.cc.o.d"
 )
 
 # Per-language clean rules from dependency scanning.

@@ -189,6 +189,82 @@ main/fast:
 	cd /home/nick/git/comp339 && $(MAKE) $(MAKESILENT) -f src/CMakeFiles/main.dir/build.make src/CMakeFiles/main.dir/build
 .PHONY : main/fast
 
+# Convenience name for target.
+src/CMakeFiles/decoder.dir/rule:
+	cd /home/nick/git/comp339 && $(MAKE) $(MAKESILENT) -f CMakeFiles/Makefile2 src/CMakeFiles/decoder.dir/rule
+.PHONY : src/CMakeFiles/decoder.dir/rule
+
+# Convenience name for target.
+decoder: src/CMakeFiles/decoder.dir/rule
+.PHONY : decoder
+
+# fast build rule for target.
+decoder/fast:
+	cd /home/nick/git/comp339 && $(MAKE) $(MAKESILENT) -f src/CMakeFiles/decoder.dir/build.make src/CMakeFiles/decoder.dir/build
+.PHONY : decoder/fast
+
+# Convenience name for target.
+src/CMakeFiles/encoder.dir/rule:
+	cd /home/nick/git/comp339 && $(MAKE) $(MAKESILENT) -f CMakeFiles/Makefile2 src/CMakeFiles/encoder.dir/rule
+.PHONY : src/CMakeFiles/encoder.dir/rule
+
+# Convenience name for target.
+encoder: src/CMakeFiles/encoder.dir/rule
+.PHONY : encoder
+
+# fast build rule for target.
+encoder/fast:
+	cd /home/nick/git/comp339 && $(MAKE) $(MAKESILENT) -f src/CMakeFiles/encoder.dir/build.make src/CMakeFiles/encoder.dir/build
+.PHONY : encoder/fast
+
+decoder.o: decoder.cc.o
+.PHONY : decoder.o
+
+# target to build an object file
+decoder.cc.o:
+	cd /home/nick/git/comp339 && $(MAKE) $(MAKESILENT) -f src/CMakeFiles/decoder.dir/build.make src/CMakeFiles/decoder.dir/decoder.cc.o
+.PHONY : decoder.cc.o
+
+decoder.i: decoder.cc.i
+.PHONY : decoder.i
+
+# target to preprocess a source file
+decoder.cc.i:
+	cd /home/nick/git/comp339 && $(MAKE) $(MAKESILENT) -f src/CMakeFiles/decoder.dir/build.make src/CMakeFiles/decoder.dir/decoder.cc.i
+.PHONY : decoder.cc.i
+
+decoder.s: decoder.cc.s
+.PHONY : decoder.s
+
+# target to generate assembly for a file
+decoder.cc.s:
+	cd /home/nick/git/comp339 && $(MAKE) $(MAKESILENT) -f src/CMakeFiles/decoder.dir/build.make src/CMakeFiles/decoder.dir/decoder.cc.s
+.PHONY : decoder.cc.s
+
+encoder.o: encoder.cc.o
+.PHONY : encoder.o
+
+# target to build an object file
+encoder.cc.o:
+	cd /home/nick/git/comp339 && $(MAKE) $(MAKESILENT) -f src/CMakeFiles/encoder.dir/build.make src/CMakeFiles/encoder.dir/encoder.cc.o
+.PHONY : encoder.cc.o
+
+encoder.i: encoder.cc.i
+.PHONY : encoder.i
+
+# target to preprocess a source file
+encoder.cc.i:
+	cd /home/nick/git/comp339 && $(MAKE) $(MAKESILENT) -f src/CMakeFiles/encoder.dir/build.make src/CMakeFiles/encoder.dir/encoder.cc.i
+.PHONY : encoder.cc.i
+
+encoder.s: encoder.cc.s
+.PHONY : encoder.s
+
+# target to generate assembly for a file
+encoder.cc.s:
+	cd /home/nick/git/comp339 && $(MAKE) $(MAKESILENT) -f src/CMakeFiles/encoder.dir/build.make src/CMakeFiles/encoder.dir/encoder.cc.s
+.PHONY : encoder.cc.s
+
 lib.o: lib.cc.o
 .PHONY : lib.o
 
@@ -243,6 +319,8 @@ parse_args.o: parse_args.cc.o
 # target to build an object file
 parse_args.cc.o:
 	cd /home/nick/git/comp339 && $(MAKE) $(MAKESILENT) -f src/CMakeFiles/main.dir/build.make src/CMakeFiles/main.dir/parse_args.cc.o
+	cd /home/nick/git/comp339 && $(MAKE) $(MAKESILENT) -f src/CMakeFiles/decoder.dir/build.make src/CMakeFiles/decoder.dir/parse_args.cc.o
+	cd /home/nick/git/comp339 && $(MAKE) $(MAKESILENT) -f src/CMakeFiles/encoder.dir/build.make src/CMakeFiles/encoder.dir/parse_args.cc.o
 .PHONY : parse_args.cc.o
 
 parse_args.i: parse_args.cc.i
@@ -251,6 +329,8 @@ parse_args.i: parse_args.cc.i
 # target to preprocess a source file
 parse_args.cc.i:
 	cd /home/nick/git/comp339 && $(MAKE) $(MAKESILENT) -f src/CMakeFiles/main.dir/build.make src/CMakeFiles/main.dir/parse_args.cc.i
+	cd /home/nick/git/comp339 && $(MAKE) $(MAKESILENT) -f src/CMakeFiles/decoder.dir/build.make src/CMakeFiles/decoder.dir/parse_args.cc.i
+	cd /home/nick/git/comp339 && $(MAKE) $(MAKESILENT) -f src/CMakeFiles/encoder.dir/build.make src/CMakeFiles/encoder.dir/parse_args.cc.i
 .PHONY : parse_args.cc.i
 
 parse_args.s: parse_args.cc.s
@@ -259,6 +339,8 @@ parse_args.s: parse_args.cc.s
 # target to generate assembly for a file
 parse_args.cc.s:
 	cd /home/nick/git/comp339 && $(MAKE) $(MAKESILENT) -f src/CMakeFiles/main.dir/build.make src/CMakeFiles/main.dir/parse_args.cc.s
+	cd /home/nick/git/comp339 && $(MAKE) $(MAKESILENT) -f src/CMakeFiles/decoder.dir/build.make src/CMakeFiles/decoder.dir/parse_args.cc.s
+	cd /home/nick/git/comp339 && $(MAKE) $(MAKESILENT) -f src/CMakeFiles/encoder.dir/build.make src/CMakeFiles/encoder.dir/parse_args.cc.s
 .PHONY : parse_args.cc.s
 
 # Help Target
@@ -274,7 +356,15 @@ help:
 	@echo "... list_install_components"
 	@echo "... rebuild_cache"
 	@echo "... common"
+	@echo "... decoder"
+	@echo "... encoder"
 	@echo "... main"
+	@echo "... decoder.o"
+	@echo "... decoder.i"
+	@echo "... decoder.s"
+	@echo "... encoder.o"
+	@echo "... encoder.i"
+	@echo "... encoder.s"
 	@echo "... lib.o"
 	@echo "... lib.i"
 	@echo "... lib.s"

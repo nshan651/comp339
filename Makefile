@@ -239,6 +239,32 @@ main/fast:
 	$(MAKE) $(MAKESILENT) -f src/CMakeFiles/main.dir/build.make src/CMakeFiles/main.dir/build
 .PHONY : main/fast
 
+#=============================================================================
+# Target rules for targets named decoder
+
+# Build rule for target.
+decoder: cmake_check_build_system
+	$(MAKE) $(MAKESILENT) -f CMakeFiles/Makefile2 decoder
+.PHONY : decoder
+
+# fast build rule for target.
+decoder/fast:
+	$(MAKE) $(MAKESILENT) -f src/CMakeFiles/decoder.dir/build.make src/CMakeFiles/decoder.dir/build
+.PHONY : decoder/fast
+
+#=============================================================================
+# Target rules for targets named encoder
+
+# Build rule for target.
+encoder: cmake_check_build_system
+	$(MAKE) $(MAKESILENT) -f CMakeFiles/Makefile2 encoder
+.PHONY : encoder
+
+# fast build rule for target.
+encoder/fast:
+	$(MAKE) $(MAKESILENT) -f src/CMakeFiles/encoder.dir/build.make src/CMakeFiles/encoder.dir/build
+.PHONY : encoder/fast
+
 # Help Target
 help:
 	@echo "The following are some of the valid targets for this Makefile:"
@@ -252,6 +278,8 @@ help:
 	@echo "... list_install_components"
 	@echo "... rebuild_cache"
 	@echo "... common"
+	@echo "... decoder"
+	@echo "... encoder"
 	@echo "... gmock"
 	@echo "... gmock_main"
 	@echo "... gtest"

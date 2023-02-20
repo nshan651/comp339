@@ -1,0 +1,1 @@
+/usr/bin/c++ -g CMakeFiles/encoder.dir/encoder.cc.o CMakeFiles/encoder.dir/parse_args.cc.o -o ../bin/encoder  -Wl,-rpath,/home/nick/git/comp339/src libcommon.so 

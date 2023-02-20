@@ -83,31 +83,32 @@ src/CMakeFiles/decoder.dir/decoder.cc.s: cmake_force
 	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green "Compiling CXX source to assembly CMakeFiles/decoder.dir/decoder.cc.s"
 	cd /home/nick/git/comp339/src && /usr/bin/c++ $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -S /home/nick/git/comp339/src/decoder.cc -o CMakeFiles/decoder.dir/decoder.cc.s
 
-src/CMakeFiles/decoder.dir/utils.cc.o: src/CMakeFiles/decoder.dir/flags.make
-src/CMakeFiles/decoder.dir/utils.cc.o: src/utils.cc
-src/CMakeFiles/decoder.dir/utils.cc.o: src/CMakeFiles/decoder.dir/compiler_depend.ts
-	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green --progress-dir=/home/nick/git/comp339/CMakeFiles --progress-num=$(CMAKE_PROGRESS_2) "Building CXX object src/CMakeFiles/decoder.dir/utils.cc.o"
-	cd /home/nick/git/comp339/src && /usr/bin/c++ $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -MD -MT src/CMakeFiles/decoder.dir/utils.cc.o -MF CMakeFiles/decoder.dir/utils.cc.o.d -o CMakeFiles/decoder.dir/utils.cc.o -c /home/nick/git/comp339/src/utils.cc
+src/CMakeFiles/decoder.dir/parse_args.cc.o: src/CMakeFiles/decoder.dir/flags.make
+src/CMakeFiles/decoder.dir/parse_args.cc.o: src/parse_args.cc
+src/CMakeFiles/decoder.dir/parse_args.cc.o: src/CMakeFiles/decoder.dir/compiler_depend.ts
+	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green --progress-dir=/home/nick/git/comp339/CMakeFiles --progress-num=$(CMAKE_PROGRESS_2) "Building CXX object src/CMakeFiles/decoder.dir/parse_args.cc.o"
+	cd /home/nick/git/comp339/src && /usr/bin/c++ $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -MD -MT src/CMakeFiles/decoder.dir/parse_args.cc.o -MF CMakeFiles/decoder.dir/parse_args.cc.o.d -o CMakeFiles/decoder.dir/parse_args.cc.o -c /home/nick/git/comp339/src/parse_args.cc
 
-src/CMakeFiles/decoder.dir/utils.cc.i: cmake_force
-	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green "Preprocessing CXX source to CMakeFiles/decoder.dir/utils.cc.i"
-	cd /home/nick/git/comp339/src && /usr/bin/c++ $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -E /home/nick/git/comp339/src/utils.cc > CMakeFiles/decoder.dir/utils.cc.i
+src/CMakeFiles/decoder.dir/parse_args.cc.i: cmake_force
+	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green "Preprocessing CXX source to CMakeFiles/decoder.dir/parse_args.cc.i"
+	cd /home/nick/git/comp339/src && /usr/bin/c++ $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -E /home/nick/git/comp339/src/parse_args.cc > CMakeFiles/decoder.dir/parse_args.cc.i
 
-src/CMakeFiles/decoder.dir/utils.cc.s: cmake_force
-	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green "Compiling CXX source to assembly CMakeFiles/decoder.dir/utils.cc.s"
-	cd /home/nick/git/comp339/src && /usr/bin/c++ $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -S /home/nick/git/comp339/src/utils.cc -o CMakeFiles/decoder.dir/utils.cc.s
+src/CMakeFiles/decoder.dir/parse_args.cc.s: cmake_force
+	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green "Compiling CXX source to assembly CMakeFiles/decoder.dir/parse_args.cc.s"
+	cd /home/nick/git/comp339/src && /usr/bin/c++ $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -S /home/nick/git/comp339/src/parse_args.cc -o CMakeFiles/decoder.dir/parse_args.cc.s
 
 # Object files for target decoder
 decoder_OBJECTS = \
 "CMakeFiles/decoder.dir/decoder.cc.o" \
-"CMakeFiles/decoder.dir/utils.cc.o"
+"CMakeFiles/decoder.dir/parse_args.cc.o"
 
 # External object files for target decoder
 decoder_EXTERNAL_OBJECTS =
 
 bin/decoder: src/CMakeFiles/decoder.dir/decoder.cc.o
-bin/decoder: src/CMakeFiles/decoder.dir/utils.cc.o
+bin/decoder: src/CMakeFiles/decoder.dir/parse_args.cc.o
 bin/decoder: src/CMakeFiles/decoder.dir/build.make
+bin/decoder: src/libcommon.so
 bin/decoder: src/CMakeFiles/decoder.dir/link.txt
 	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green --bold --progress-dir=/home/nick/git/comp339/CMakeFiles --progress-num=$(CMAKE_PROGRESS_3) "Linking CXX executable ../bin/decoder"
 	cd /home/nick/git/comp339/src && $(CMAKE_COMMAND) -E cmake_link_script CMakeFiles/decoder.dir/link.txt --verbose=$(VERBOSE)

@@ -88,4 +88,6 @@ set(CMAKE_DEPEND_INFO_FILES
   "_deps/googletest-build/googletest/CMakeFiles/gtest_main.dir/DependInfo.cmake"
   "src/CMakeFiles/common.dir/DependInfo.cmake"
   "src/CMakeFiles/main.dir/DependInfo.cmake"
+  "src/CMakeFiles/decoder.dir/DependInfo.cmake"
+  "src/CMakeFiles/encoder.dir/DependInfo.cmake"
   )

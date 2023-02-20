@@ -66,9 +66,8 @@ int encode(vector<string> &words, const int shift)
 int decode(vector<string> &words, map<string, int> &dictionary)
 /** Decodes a single line using a word dictionary */
 {
-    int threshold = words.size();
+    int threshold = words.size()-1;
     int shift = 0;
-
     for (shift = 1; shift <= ALPHABET_SIZE; shift++) {
         int matches = 0;
         for (string &word : words) {
@@ -77,9 +76,6 @@ int decode(vector<string> &words, map<string, int> &dictionary)
                 matches++;
                 if (matches >= threshold) {
                     print_output(shift_left, words, shift);
-                    /* for (string &res : words) */
-                    /*     cout << shift_left(res, shift) << " "; */
-
                     return shift;
                 }
             }

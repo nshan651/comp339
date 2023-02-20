@@ -2,7 +2,7 @@
 
 using namespace std;
 
-int main()
+int main(int argc, char **argv)
 /** 
 name output text (of shift values) to filename (if absent, write to standard output)
 The decoder does the following:
@@ -33,7 +33,7 @@ The decoder does the following:
     while (getline(file, line)) {
         vector<string> words = split_line(line, cipher.min_len);
         int result = decode(words, dictionary);
-        cout << "Shift Value: " << result << "\n";
+        /* cout << "Shift Value: " << result << "\n"; */
     }
 
     return 0;

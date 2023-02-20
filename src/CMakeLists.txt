@@ -23,6 +23,20 @@ add_executable(
 )
 target_link_libraries(main common)
 
+add_executable(
+  decoder
+  decoder.cc
+  parse_args.cc
+)
+target_link_libraries(decoder common)
+
+add_executable(
+  encoder 
+  encoder.cc
+  parse_args.cc
+)
+target_link_libraries(encoder common)
+
 # add_executable(
 #   decoder
 #   decoder.cc

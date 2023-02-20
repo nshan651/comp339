@@ -28,6 +28,8 @@
 /home/nick/git/comp339/_deps/googletest-build/googletest/CMakeFiles/install/strip.dir
 /home/nick/git/comp339/src/CMakeFiles/common.dir
 /home/nick/git/comp339/src/CMakeFiles/main.dir
+/home/nick/git/comp339/src/CMakeFiles/decoder.dir
+/home/nick/git/comp339/src/CMakeFiles/encoder.dir
 /home/nick/git/comp339/src/CMakeFiles/edit_cache.dir
 /home/nick/git/comp339/src/CMakeFiles/rebuild_cache.dir
 /home/nick/git/comp339/src/CMakeFiles/list_install_components.dir

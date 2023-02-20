@@ -4,6 +4,7 @@
 src/CMakeFiles/decoder.dir/decoder.cc.o: src/decoder.cc \
   /usr/include/stdc-predef.h \
   include/main.hh \
+  include/lib.hh \
   /usr/include/c++/12.2.1/iostream \
   /usr/include/c++/12.2.1/x86_64-pc-linux-gnu/bits/c++config.h \
   /usr/include/c++/12.2.1/x86_64-pc-linux-gnu/bits/os_defines.h \
@@ -234,9 +235,10 @@ src/CMakeFiles/decoder.dir/decoder.cc.o: src/decoder.cc \
   /usr/include/string.h \
   /usr/include/strings.h
 
-src/CMakeFiles/decoder.dir/utils.cc.o: src/utils.cc \
+src/CMakeFiles/decoder.dir/parse_args.cc.o: src/parse_args.cc \
   /usr/include/stdc-predef.h \
   include/main.hh \
+  include/lib.hh \
   /usr/include/c++/12.2.1/iostream \
   /usr/include/c++/12.2.1/x86_64-pc-linux-gnu/bits/c++config.h \
   /usr/include/c++/12.2.1/x86_64-pc-linux-gnu/bits/os_defines.h \
@@ -468,11 +470,9 @@ src/CMakeFiles/decoder.dir/utils.cc.o: src/utils.cc \
   /usr/include/strings.h
 
 
-src/utils.cc:
+src/parse_args.cc:
 
 /usr/include/strings.h:
-
-/usr/include/c++/12.2.1/cstring:
 
 /usr/include/c++/12.2.1/bits/stl_set.h:
 
@@ -598,6 +598,8 @@ src/utils.cc:
 
 /usr/include/c++/12.2.1/ext/alloc_traits.h:
 
+/usr/include/c++/12.2.1/bits/basic_string.h:
+
 /usr/include/linux/close_range.h:
 
 /usr/include/bits/stdint-intn.h:
@@ -702,15 +704,7 @@ src/utils.cc:
 
 /usr/include/c++/12.2.1/x86_64-pc-linux-gnu/bits/os_defines.h:
 
-/usr/include/c++/12.2.1/streambuf:
-
-/usr/include/c++/12.2.1/bits/stl_function.h:
-
 include/main.hh:
-
-/usr/include/c++/12.2.1/x86_64-pc-linux-gnu/bits/c++locale.h:
-
-/usr/include/bits/typesizes.h:
 
 /usr/include/c++/12.2.1/bits/stl_algo.h:
 
@@ -738,12 +732,6 @@ include/main.hh:
 
 src/decoder.cc:
 
-/usr/include/c++/12.2.1/bits/ios_base.h:
-
-/usr/include/gnu/stubs.h:
-
-/usr/include/bits/pthreadtypes-arch.h:
-
 /usr/include/c++/12.2.1/bits/cxxabi_init_exception.h:
 
 /usr/include/c++/12.2.1/bits/hash_bytes.h:
@@ -751,6 +739,16 @@ src/decoder.cc:
 /usr/include/c++/12.2.1/exception:
 
 /usr/include/c++/12.2.1/bits/functexcept.h:
+
+/usr/include/c++/12.2.1/bits/ios_base.h:
+
+/usr/include/bits/pthreadtypes-arch.h:
+
+/usr/include/gnu/stubs.h:
+
+/usr/include/c++/12.2.1/streambuf:
+
+/usr/include/c++/12.2.1/bits/stl_function.h:
 
 /usr/include/c++/12.2.1/x86_64-pc-linux-gnu/bits/error_constants.h:
 
@@ -764,6 +762,10 @@ src/decoder.cc:
 
 /usr/include/c++/12.2.1/iosfwd:
 
+/usr/include/bits/select.h:
+
+/usr/include/c++/12.2.1/bits/memoryfwd.h:
+
 /usr/include/c++/12.2.1/bits/char_traits.h:
 
 /usr/include/wchar.h:
@@ -771,10 +773,6 @@ src/decoder.cc:
 /usr/include/c++/12.2.1/bits/basic_string.tcc:
 
 /usr/include/c++/12.2.1/bits/new_allocator.h:
-
-/usr/include/bits/select.h:
-
-/usr/include/c++/12.2.1/bits/memoryfwd.h:
 
 /usr/include/bits/libc-header-start.h:
 
@@ -788,7 +786,15 @@ src/decoder.cc:
 
 /usr/include/bits/types/mbstate_t.h:
 
+/usr/include/c++/12.2.1/cstring:
+
+include/lib.hh:
+
 /usr/include/bits/floatn-common.h:
+
+/usr/include/bits/typesizes.h:
+
+/usr/include/c++/12.2.1/x86_64-pc-linux-gnu/bits/c++locale.h:
 
 /usr/include/c++/12.2.1/clocale:
 
@@ -805,8 +811,6 @@ src/decoder.cc:
 /usr/include/c++/12.2.1/x86_64-pc-linux-gnu/bits/gthr.h:
 
 /usr/include/c++/12.2.1/x86_64-pc-linux-gnu/bits/gthr-default.h:
-
-/usr/include/c++/12.2.1/bits/basic_string.h:
 
 /usr/include/pthread.h:
 
