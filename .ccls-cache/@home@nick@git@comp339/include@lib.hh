@@ -15,32 +15,37 @@
 #include <random>
 
 using namespace std;
+/* Type aliases */
+using Decoded = map<vector<string>, int>;
+using Shifter = string(*)(const string, const int);
 
-/* const string PROJ_DIR = "/home/runner/Project-1-Caesar-Cipher-comp-339-439-ds/data/"; */
 const string PROJ_DIR = "./data/";
 const int ALPHABET_SIZE = 26;
 
 struct Cipher {
-    bool encrypt = false;
-    int num_lines;
+    int num_lines = 10;
     int min_len = 3;
-    string dict_file = PROJ_DIR + "american-english";
-    /* string input_file = PROJ_DIR + "decrypt.txt"; */
-    string input_file = "";
-    string output_file = ""; 
+    string dict = PROJ_DIR + "american-english";
+    string input = ""; 
+    string output = ""; 
 };
+
+/* Decoder */
+Decoded decoder(Cipher cipher);
+
+/* IO streams */
+istream &in_stream(string &input);
+ostream &out_stream(string &output);
 
 int rng(int min, int max);
 int decode(vector<string> &words, map<string, int> &dictionary);
-int encode(vector<string> &words, int shift);
+vector<string> encode(vector<string> &words, int shift);
 int parse_args(Cipher &cipher, int argc, char **argv);
-string convert_alpha(string &word);
 
+string convert_alpha(string &word);
 string shift_left(const string word, const int shift);
 string shift_right(const string word, const int shift);
 
-typedef string (*Shifter)(const string, const int);
-void handle_io(Shifter func, vector<string> &words, const int shift);
-
+vector<string> collect_words(vector<string> &words, Shifter func, const int shift);
 vector<string> split_line(string &line, const int min_len);
 map<string, int> parse_dict(const string &filename);

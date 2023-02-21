@@ -66,19 +66,24 @@ map<string, int> parse_dict(const string &filename)
     return words;
 }
 
-int encode(vector<string> &words, const int shift)
+vector<string> encode(vector<string> &words, const int shift)
 /** Encodes a single line using a given shift value **/
 {
+    /*
+    vector<string> encoded;
     for (string &word : words)
-        shift_right(word, shift);
-    
-    return shift;
+        encoded.push_back(
+            shift_right(word, shift)
+        );
+    return encoded;
+    */
+    return collect_words(words, shift_right, shift);    
 }
 
 int decode(vector<string> &words, map<string, int> &dictionary)
 /** Decodes a single line using a word dictionary */
 {
-    int threshold = words.size()-2;
+    int threshold = words.size()-1;
     int shift = 0;
     for (shift = 1; shift <= ALPHABET_SIZE; shift++) {
         int matches = 0;
@@ -111,7 +116,6 @@ string shift_left(const string word, const int shift)
     return candidate;
 }
 
-
 string shift_right(const string word, const int shift)
 /** Shift a word left */
 {
@@ -128,13 +132,22 @@ string shift_right(const string word, const int shift)
     return candidate;
 }
 
-void handle_io(Shifter func, vector<string> &words, const int shift)
-/** Print output **/
+vector<string> collect_words(vector<string> &words, 
+                             Shifter func,
+                             const int shift)
+/** Collect result */
+{
+    vector<string> collect;
+    for (string &word: words)
+        collect.push_back( func(word, shift) );
+    return collect;
+}
+
+void print_words(vector<string> &words, int shift)
+/** Prints the words of a vec */
 {
     cout << "SHIFT => " << shift << " WORDS => ";
-    for (string &res : words) {
-        string s = func(res, shift);
-        cout << s << " ";
-    }
+    for (string &word: words)
+        cout << word << " ";
     cout << "\n";
 }

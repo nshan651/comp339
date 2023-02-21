@@ -2,15 +2,15 @@
 
 using namespace std;
 
- int gen_text(Cipher cipher, ostream& output)
+ void gen_text(Cipher cipher, ostream &output)
  /** Generate cipher text */
  {
      int words_per_line = 5;
 
-     map<string, int> dictionary = parse_dict(cipher.dict_file);
+     map<string, int> dictionary = parse_dict(cipher.dict);
 
      for (int i = 0; i < cipher.num_lines; i++) {
-       int rand_shift = rng(1, 26);
+       int rand_shift = rng(1, ALPHABET_SIZE);
 
        for (int j = 0; j < words_per_line; j++) {
          int rand_index = rng(1, dictionary.size()-1);
@@ -23,8 +23,26 @@ using namespace std;
        }
        output << "\n";
      }
-     return 0;
  }
+
+void encoder(Cipher cipher, istream &input, ostream &output)
+{
+    /* If the input is empty (default) generate random text */
+    if (cipher.input == "") {
+        cout << "GEN";
+        gen_text(cipher, output);
+    }
+    /* Otherwise, encode the std input */
+    else {
+        string line;
+        while (input >> line) {
+            int rand_shift = rng(1, ALPHABET_SIZE);
+            vector<string> words = split_line(line, cipher.min_len);
+            vector<string> encoded = encode(words, rand_shift);
+            vector<string> collect = collect_words(encoded, shift_right, rand_shift);
+        }
+    }
+}
 
 
 int main(int argc, char **argv)
@@ -39,26 +57,15 @@ The encoder does the following:
 {
     Cipher cipher;
 
-    // NOTE: Hard-coded, remove later!!!
-    cipher.min_len = 1;
-    cipher.num_lines = 10;
-    /* cipher.output_file = "./data/ciphertext.txt"; */
+    /* Parse CLI */
+    int option = parse_args(cipher, argc, argv);
+    if (option == 0 || option == 1) exit(option);
 
-    parse_args(cipher, argc, argv);
+    /* Handle IO */
+    istream &input = in_stream(cipher.input);
+    ostream &output = out_stream(cipher.output);
 
-    if (cipher.output_file == "") {
-        gen_text(cipher, cout);
-        return 0;
-    }
-
-    ofstream file(cipher.output_file);
-    if (!file.is_open()) {
-      cerr << "Failed to open file";
-      return 1;
-    }
-    gen_text(cipher, file);
-    file.close();
-
+    encoder(cipher, input, output);
 
     return 0;
 }

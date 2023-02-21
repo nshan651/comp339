@@ -2,27 +2,21 @@ FetchContent_MakeAvailable(googletest)
 
 enable_testing()
 
-# add_executable(
-#   square_root_tests
-#   square_root_tests.cc
-#   square_root.c
-# )
-# target_link_libraries(
-#   square_root_tests
-#   gtest_main
-# )
-
 # Common library
-add_library(common SHARED lib.cc)
+add_library(common SHARED lib.cc streams.cc)
 
-# Main executable
+# Test
 add_executable(
-  main
-  main.cc
-  parse_args.cc
+  caeser_test
+  caeser_test.cc
 )
-target_link_libraries(main common)
+target_link_libraries(
+  caeser_test
+  gtest_main
+  common
+)
 
+# Decoder
 add_executable(
   decoder
   decoder.cc
@@ -30,6 +24,7 @@ add_executable(
 )
 target_link_libraries(decoder common)
 
+# Encoder
 add_executable(
   encoder 
   encoder.cc
@@ -37,12 +32,5 @@ add_executable(
 )
 target_link_libraries(encoder common)
 
-# add_executable(
-#   decoder
-#   decoder.cc
-#   utils.cc
-# )
-# target_link_libraries(decoder -lm)
-
 include(GoogleTest)
-# gtest_discover_tests(caeser_test)
+gtest_discover_tests(caeser_test)

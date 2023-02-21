@@ -2,18 +2,22 @@
 
 using namespace std;
 
-int decode_lines(Cipher cipher, istream& input)
+Decoded decoder(Cipher cipher, istream &input)
+/** Create a grouping of decoded sentences and their shifts */
 {
-    map<string, int> dictionary = parse_dict(cipher.dict_file);
+    map<string, int> dictionary = parse_dict(cipher.dict);
+    Decoded dec;
     string line;
     while (getline(input, line)) {
         vector<string> words = split_line(line, cipher.min_len);
         int shift = decode(words, dictionary);
-        /* cout << shift << "\n"; */
-        handle_io(shift_left, words, shift);
+        vector<string> collect = collect_words(words, shift_left, shift);
+        dec[collect] = shift; 
     }
-    return 0;
+    return dec;
 }
+
+
 
 int main(int argc, char **argv)
 /** 
@@ -28,27 +32,17 @@ The decoder does the following:
 */
 {
     Cipher cipher;
+    Decoded dec;
 
-    // NOTE: Hard-coded, remove later!!!
-    cipher.min_len = 1;
+    int option = parse_args(cipher, argc, argv);
+    if (option == 0 || option == 1) exit(option);
 
-    parse_args(cipher, argc, argv);
+    /* Handle IO */
+    istream &input = in_stream(cipher.input);
+    ostream &output = out_stream(cipher.output);
 
-    /* cipher.input_file = "./data/ciphertext.txt"; */
-
-
-    if (cipher.input_file == "") {
-        decode_lines(cipher, cin);
-        return 0;
-    }
-
-    ifstream file(cipher.input_file);
-    if (!file.is_open()) {
-        cerr << "Error opening file.";
-        return 1;
-    }
-    decode_lines(cipher, file);
-    file.close();
+    dec = decoder(cipher, input);
 
     return 0;
 }
+
