@@ -2,12 +2,11 @@
 #include <string>
 #include <algorithm>
 #include <map>
-#include <unordered_set>
 #include <fstream>
 #include <vector>
 #include <sstream>
-#include <unistd.h>
 #include <ostream> 
+#include <unistd.h>
 #include <set>
 #include <cctype>
 #include <cstdlib>
@@ -16,8 +15,9 @@
 
 using namespace std;
 /* Type aliases */
-using Decoded = map<vector<string>, int>;
 using Shifter = string(*)(const string, const int);
+using CipherMap = map<vector<string>, int>;
+using CipherIter = vector<vector<string>>::iterator;
 
 const string PROJ_DIR = "./data/";
 const int ALPHABET_SIZE = 26;
@@ -30,14 +30,17 @@ struct Cipher {
     string output = ""; 
 };
 
-/* Decoder */
-Decoded decoder(Cipher cipher);
+/* Encoder and decoder */
+void encoder(const Cipher &cipher, istream &input, ostream &output);
+void decoder(const Cipher &cipher, istream &input, ostream &output);
 
 /* IO streams */
 istream &in_stream(string &input);
 ostream &out_stream(string &output);
 
-int rng(int min, int max);
+void output_words(vector<string> &words, ostream &output);
+
+int rng(const int min, const int max);
 int decode(vector<string> &words, map<string, int> &dictionary);
 vector<string> encode(vector<string> &words, int shift);
 int parse_args(Cipher &cipher, int argc, char **argv);
@@ -48,4 +51,4 @@ string shift_right(const string word, const int shift);
 
 vector<string> collect_words(vector<string> &words, Shifter func, const int shift);
 vector<string> split_line(string &line, const int min_len);
-map<string, int> parse_dict(const string &filename);
+map<string, int> parse_dict(const Cipher &cipher);

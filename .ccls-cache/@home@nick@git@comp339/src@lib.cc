@@ -2,7 +2,7 @@
 
 using namespace std;
 
-int rng(int min, int max) 
+int rng(const int min, const int max) 
 /** Generates a random number given an upper and lower bound */
 {
     // Create a random_device to generate a random seed
@@ -49,17 +49,17 @@ vector<string> split_line(string &line, const int min_len)
     return words;
 }
 
-map<string, int> parse_dict(const string &filename)
+map<string, int> parse_dict(const Cipher &cipher)
 /** Read and parse dictionary, excluding any non-Ascii letters */
 {
-    ifstream file(filename);
+    ifstream file(cipher.dict);
     string line;
     map<string, int> words;
 
     int counter = 0;
     while (file >> line) {
         string alpha = convert_alpha(line);
-        if (!alpha.empty())
+        if (!alpha.empty() && alpha.length() >= cipher.min_len)
             words[alpha] = counter;
             counter++;
     }
@@ -69,14 +69,6 @@ map<string, int> parse_dict(const string &filename)
 vector<string> encode(vector<string> &words, const int shift)
 /** Encodes a single line using a given shift value **/
 {
-    /*
-    vector<string> encoded;
-    for (string &word : words)
-        encoded.push_back(
-            shift_right(word, shift)
-        );
-    return encoded;
-    */
     return collect_words(words, shift_right, shift);    
 }
 
@@ -134,20 +126,23 @@ string shift_right(const string word, const int shift)
 
 vector<string> collect_words(vector<string> &words, 
                              Shifter func,
+                             ostream &output,
                              const int shift)
 /** Collect result */
 {
     vector<string> collect;
-    for (string &word: words)
-        collect.push_back( func(word, shift) );
+    for (string &word: words) {
+        string shifted = func(word, shift);
+        collect.push_back(shifted);
+        cout << shifted << " ";
+    }
     return collect;
 }
 
-void print_words(vector<string> &words, int shift)
+void output_words(vector<string> &words, ostream &output)
 /** Prints the words of a vec */
 {
-    cout << "SHIFT => " << shift << " WORDS => ";
     for (string &word: words)
-        cout << word << " ";
-    cout << "\n";
+        output << word << " ";
+    output << "\n";
 }

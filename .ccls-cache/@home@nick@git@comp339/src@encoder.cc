@@ -2,48 +2,67 @@
 
 using namespace std;
 
- void gen_text(Cipher cipher, ostream &output)
- /** Generate cipher text */
- {
-     int words_per_line = 5;
-
-     map<string, int> dictionary = parse_dict(cipher.dict);
-
-     for (int i = 0; i < cipher.num_lines; i++) {
-       int rand_shift = rng(1, ALPHABET_SIZE);
-
-       for (int j = 0; j < words_per_line; j++) {
-         int rand_index = rng(1, dictionary.size()-1);
-         auto iter = dictionary.begin();
-         advance(iter, rand_index);
-         string new_line = iter->first;
-
-         string encoded = shift_right(new_line, rand_shift);
-         output << encoded << " ";
-       }
-       output << "\n";
-     }
- }
-
-void encoder(Cipher cipher, istream &input, ostream &output)
+/* void gen_text(const Cipher &cipher, ostream &output) */
+CipherIter gen_text(const Cipher &cipher)
+/** Generate cipher text */
 {
-    /* If the input is empty (default) generate random text */
-    if (cipher.input == "") {
-        cout << "GEN";
-        gen_text(cipher, output);
-    }
-    /* Otherwise, encode the std input */
-    else {
-        string line;
-        while (input >> line) {
-            int rand_shift = rng(1, ALPHABET_SIZE);
-            vector<string> words = split_line(line, cipher.min_len);
-            vector<string> encoded = encode(words, rand_shift);
-            vector<string> collect = collect_words(encoded, shift_right, rand_shift);
+    // TODO: parameterize this
+    int words_per_line = 5;
+
+    map<string, int> dictionary = parse_dict(cipher);
+    CipherIter plaintext;
+    for (int i = 0; i < cipher.num_lines; i++) {
+        vector<string> line;
+        for (int j = 0; j < words_per_line; j++) {
+            int rand_index = rng(1, dictionary.size()-1);
+            auto iter = dictionary.begin();
+            advance(iter, rand_index);
+            line.push_back(iter->first);
         }
+        plaintext.push_back(line);
     }
+    return plaintext;
 }
 
+CipherIter read_text(Cipher cipher, istream &input)
+{
+    vector<vector<string>> lines;
+    string line;
+    while (getline(input, line)) 
+        lines.push_back(split_line(line, cipher.min_len));
+    return lines;
+}
+
+CipherMap encoder(const Cipher &cipher, istream &input, ostream &output)
+{
+    CipherMap encoded;
+    CipherIter iter;
+
+    if (cipher.input == "") 
+        iter = gen_text(cipher, input, output);
+    else 
+        iter = read_text(cipher, input, output);
+
+    for_each(iter.begin(), iter.end(), [encoded](auto &words) {
+        int shift = rng(1, ALPHABET_SIZE);
+        /* Output header if output is cout */
+        if (cipher.output == "")
+            output << "SHIFT => " << shift << "WORDS =>\n";
+        vector<string> encode_line = collect_words(words, 
+                                        shift_right,
+                                        output,
+                                        shift
+                                    );
+        encoded[encode_line] = shift;
+    });
+
+    return encoded;
+
+    /*
+    return (cipher.input == "") ? gen_ciphertext(cipher, output) :
+                                  read_ciphertext(cipher, input, output);
+    */
+}
 
 int main(int argc, char **argv)
 /**

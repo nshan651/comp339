@@ -2,22 +2,21 @@
 
 using namespace std;
 
-Decoded decoder(Cipher cipher, istream &input)
+/* Decoded decoder(Cipher cipher, istream &input) */
+void decoder(const Cipher &cipher, istream &input, ostream &output)
 /** Create a grouping of decoded sentences and their shifts */
 {
-    map<string, int> dictionary = parse_dict(cipher.dict);
-    Decoded dec;
+    map<string, int> dictionary = parse_dict(cipher);
     string line;
     while (getline(input, line)) {
         vector<string> words = split_line(line, cipher.min_len);
         int shift = decode(words, dictionary);
         vector<string> collect = collect_words(words, shift_left, shift);
-        dec[collect] = shift; 
+        if (cipher.output == "")
+            cout << "SHIFT => " << shift << " WORDS => ";
+        output_words(collect, output);
     }
-    return dec;
 }
-
-
 
 int main(int argc, char **argv)
 /** 
@@ -32,7 +31,6 @@ The decoder does the following:
 */
 {
     Cipher cipher;
-    Decoded dec;
 
     int option = parse_args(cipher, argc, argv);
     if (option == 0 || option == 1) exit(option);
@@ -41,7 +39,7 @@ The decoder does the following:
     istream &input = in_stream(cipher.input);
     ostream &output = out_stream(cipher.output);
 
-    dec = decoder(cipher, input);
+    decoder(cipher, input, output);
 
     return 0;
 }
