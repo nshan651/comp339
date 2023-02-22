@@ -3,26 +3,35 @@
 
 using namespace std;
 
-/* Cipher gen_cipher(const string &input, const string &output) */
-/** Generator function for a new Cipher instance */
+
+/* Cipher builder(string std_in, string std_out) */
 /* { */
-/*     Cipher gc; */
-/*     gc.input = input; */
-/*     gc.output = output; */
-/*     return gc; */
+/*     Cipher new_cipher( */ 
+/*         in_stream(std_in), */ 
+/*         out_stream(std_out), */
+/*         10, */ 
+/*         3, */ 
+/*         PROJ_DIR + "american-english", */
+/*         std_in, */
+/*         std_out */ 
+/*     ); */
+/*     return new_cipher; */
 /* } */
 
 TEST(CaeserTest, Encoder)
 {
-    /* Cipher plaintext = gen_cipher("./data/plaintext.txt", */
-    /*                               "./data/pipe"); */
+    /* string in = ""; */
+    /* string out = "./data/out"; */
+    /* Cipher expected = builder(in, out); */
+    /* CipherMap expected_map = encoder(expected); */
 
-    /* Handle IO */
-    /* istream &input = in_stream(cipher.input); */
-    /* ostream &output = out_stream(cipher.output); */
+    /* string in2 = "./data/out"; */
+    /* string out2 = ""; */
+    /* Cipher encode_f = builder(in2, out2); */
+    /* CipherMap encode_f_map = encoder(encode_f); */
 
-    /* CipherMap cmap = encoder(cipher, input, output); */
 
+    /* ASSERT_EQ(expected_map, encode_f_map); */
     ASSERT_EQ(1, 1);
 }
 
