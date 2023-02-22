@@ -50,12 +50,12 @@ struct Cipher {
 };
 
 Cipher build_cipher(int argc, char **argv);
-/* Encoder */
-CipherMap encoder(const Cipher &cipher, istream &input, ostream &output);
-CipherIter read_text(Cipher cipher, istream &input);
-CipherIter gen_text(const Cipher &cipher);
 
 CipherMap decoder(const Cipher &cipher);
+CipherMap encoder(const Cipher &cipher);
+
+CipherIter read_text(const Cipher &cipher);
+CipherIter gen_text(const Cipher &cipher);
 
 /* IO streams */
 istream &in_stream(string &input);

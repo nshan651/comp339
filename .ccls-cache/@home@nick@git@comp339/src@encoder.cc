@@ -1,4 +1,4 @@
-#include <main.hh>
+#include <lib.hh>
 
 using namespace std;
 
@@ -25,16 +25,17 @@ CipherIter gen_text(const Cipher &cipher)
 }
 
 /* CipherIter read_text(Cipher cipher, istream &input) */
-CipherIter read_text(Cipher cipher)
+CipherIter read_text(const Cipher &cipher)
 /** Return an iterator of text read from stdin */
 {
-    vector<vector<string>> lines;
+    CipherIter lines;
     string nline;
+
     while (getline(cipher.input, nline)) {
         if (nline == "")
             continue;
         string line = strip_metadata(nline);
-        lines.push_back(split_line(line, cipher.min_len));
+        lines.push_back(split_line(nline, cipher.min_len));
     }
     return lines;
 }
@@ -51,16 +52,18 @@ CipherMap encoder(const Cipher &cipher)
         int shift = rng(1, ALPHABET_SIZE);
         /* Output header if output is cout */
         if (cipher.std_out == "")
-            cout << "\nSHIFT => " << shift << " WORDS => ";
+            cout << "SHIFT => " << shift << " WORDS => ";
         vector<string> collect = collect_words(words, 
                                         shift_right,
                                         cipher.output,
                                         shift);
+        cipher.output << "\n";
         encoded[collect] = shift;
     });
     return encoded;
 }
 
+#ifdef ENCODER
 int main(int argc, char **argv)
 /**
 The encoder does the following:
@@ -78,3 +81,4 @@ The encoder does the following:
 
     return 0;
 }
+#endif

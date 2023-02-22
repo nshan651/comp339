@@ -31,6 +31,7 @@ CipherMap decoder(const Cipher &cipher)
     return encoded;
 }
 
+#ifdef DECODER
 int main(int argc, char **argv)
 /** 
 The decoder does the following:
@@ -48,4 +49,4 @@ The decoder does the following:
 
     return 0;
 }
-
+#endif

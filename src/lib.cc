@@ -1,4 +1,4 @@
-#include <main.hh>
+#include <lib.hh>
 
 using namespace std;
 
@@ -18,13 +18,12 @@ string strip_metadata(string &nline)
 /** Strip metadata to make text pipe-able */
 {
     size_t pos = nline.find("WORDS =>");
-    string line;
-    if (pos != string::npos) {
-        line = nline.substr(pos + 8); 
-        // Trim leading and trailing spaces
-        line.erase(0, line.find_first_not_of(" \t"));
-        line.erase(line.find_last_not_of(" \t") + 1);
-    }
+    if (pos == string::npos) return nline;
+    
+    string line = nline.substr(pos + 8); 
+    /* Trim leading and trailing spaces */
+    line.erase(0, line.find_first_not_of(" \t"));
+    line.erase(line.find_last_not_of(" \t") + 1);
     return line;
 }
 
@@ -142,17 +141,7 @@ vector<string> collect_words(vector<string> &words,
     for (string &word: words) {
         string shifted = func(word, shift);
         collect.push_back(shifted);
-        cout << shifted << " ";
+        output << shifted << " ";
     }
     return collect;
 }
-
-/* void output_words(vector<string> &words, ostream &output) */
-/** Prints the words of a vec */
-/*
-{
-    for (string &word: words)
-        output << word << " ";
-    output << "\n";
-}
-*/
