@@ -22,11 +22,11 @@ int parse_args(Cipher &cipher, int argc, char **argv)
                 cout << "Dict option selected.\n";
                 break;
             case 'i':
-                cipher.input = optarg;
+                cipher.std_in = optarg;
                 cout << "Input option selected.\n";
                 break;
             case 'o':
-                cipher.output = optarg;
+                cipher.std_out = optarg;
                 cout << "Output option selected.\n";
                 break;
             case 'h':
@@ -50,3 +50,4 @@ int parse_args(Cipher &cipher, int argc, char **argv)
     }
     return option;
 }
+

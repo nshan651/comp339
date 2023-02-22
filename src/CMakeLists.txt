@@ -17,12 +17,12 @@ target_link_libraries(
 )
 
 # Decoder
-add_executable(
-  decoder
-  decoder.cc
-  parse_args.cc
-)
-target_link_libraries(decoder common)
+# add_executable(
+#   decoder
+#   decoder.cc
+#   parse_args.cc
+# )
+# target_link_libraries(decoder common)
 
 # Encoder
 add_executable(

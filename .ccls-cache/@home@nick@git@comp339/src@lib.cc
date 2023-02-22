@@ -66,12 +66,6 @@ map<string, int> parse_dict(const Cipher &cipher)
     return words;
 }
 
-vector<string> encode(vector<string> &words, const int shift)
-/** Encodes a single line using a given shift value **/
-{
-    return collect_words(words, shift_right, shift);    
-}
-
 int decode(vector<string> &words, map<string, int> &dictionary)
 /** Decodes a single line using a word dictionary */
 {
@@ -139,10 +133,12 @@ vector<string> collect_words(vector<string> &words,
     return collect;
 }
 
-void output_words(vector<string> &words, ostream &output)
+/* void output_words(vector<string> &words, ostream &output) */
 /** Prints the words of a vec */
+/*
 {
     for (string &word: words)
         output << word << " ";
     output << "\n";
 }
+*/

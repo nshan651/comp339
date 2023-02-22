@@ -4,7 +4,7 @@ using namespace std;
 
 /* void gen_text(const Cipher &cipher, ostream &output) */
 CipherIter gen_text(const Cipher &cipher)
-/** Generate cipher text */
+/** Return an iterator of generated text. */
 {
     // TODO: parameterize this
     int words_per_line = 5;
@@ -24,44 +24,44 @@ CipherIter gen_text(const Cipher &cipher)
     return plaintext;
 }
 
-CipherIter read_text(Cipher cipher, istream &input)
+/* CipherIter read_text(Cipher cipher, istream &input) */
+CipherIter read_text(Cipher cipher)
+/** Return an iterator of text read from stdin */
 {
     vector<vector<string>> lines;
     string line;
-    while (getline(input, line)) 
+    while (getline(cipher.input, line)) 
         lines.push_back(split_line(line, cipher.min_len));
     return lines;
 }
 
-CipherMap encoder(const Cipher &cipher, istream &input, ostream &output)
+/* CipherMap encoder(const Cipher &cipher, istream &input, ostream &output) */
+CipherMap encoder(const Cipher &cipher)
 {
+    /* CipherIter iter; */
+    /* if (cipher.std_in) */ 
+    /*     iter = gen_text(cipher); */
+    /* else */ 
+    /*     iter = read_text(cipher); */
+
+    /* Iterater over input */
+    CipherIter iter = (cipher.std_in == "") ? gen_text(cipher) 
+                                        : read_text(cipher);
+    
+    /* Populate mapping */
     CipherMap encoded;
-    CipherIter iter;
-
-    if (cipher.input == "") 
-        iter = gen_text(cipher, input, output);
-    else 
-        iter = read_text(cipher, input, output);
-
-    for_each(iter.begin(), iter.end(), [encoded](auto &words) {
+    for_each(iter.begin(), iter.end(), [&](auto &words) {
         int shift = rng(1, ALPHABET_SIZE);
         /* Output header if output is cout */
-        if (cipher.output == "")
-            output << "SHIFT => " << shift << "WORDS =>\n";
+        if (cipher.std_out == "")
+            cipher.output << "\nSHIFT => " << shift << " WORDS => ";
         vector<string> encode_line = collect_words(words, 
                                         shift_right,
-                                        output,
-                                        shift
-                                    );
+                                        cipher.output,
+                                        shift);
         encoded[encode_line] = shift;
     });
-
     return encoded;
-
-    /*
-    return (cipher.input == "") ? gen_ciphertext(cipher, output) :
-                                  read_ciphertext(cipher, input, output);
-    */
 }
 
 int main(int argc, char **argv)
@@ -74,17 +74,17 @@ The encoder does the following:
     -The output lines may either be directed to standard output or to a file.
 */
 {
-    Cipher cipher;
+    Cipher cipher(cin, cout);
 
     /* Parse CLI */
     int option = parse_args(cipher, argc, argv);
     if (option == 0 || option == 1) exit(option);
 
     /* Handle IO */
-    istream &input = in_stream(cipher.input);
-    ostream &output = out_stream(cipher.output);
+    /* istream &input = in_stream(cipher.input); */
+    /* ostream &output = out_stream(cipher.output); */
 
-    encoder(cipher, input, output);
+    CipherMap cmap = encoder(cipher);
 
     return 0;
 }

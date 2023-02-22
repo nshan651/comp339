@@ -3,17 +3,25 @@
 
 using namespace std;
 
+/* Cipher gen_cipher(const string &input, const string &output) */
+/** Generator function for a new Cipher instance */
+/* { */
+/*     Cipher gc; */
+/*     gc.input = input; */
+/*     gc.output = output; */
+/*     return gc; */
+/* } */
+
 TEST(CaeserTest, Encoder)
 {
-    Cipher cipher;
+    /* Cipher plaintext = gen_cipher("./data/plaintext.txt", */
+    /*                               "./data/pipe"); */
 
-    cipher.input = "./data/plaintext.txt";
-    cipher.output = "./data/pipe";
     /* Handle IO */
-    istream &input = in_stream(cipher.input);
-    ostream &output = out_stream(cipher.output);
+    /* istream &input = in_stream(cipher.input); */
+    /* ostream &output = out_stream(cipher.output); */
 
-    /* encoder(cipher, input, output); */
+    /* CipherMap cmap = encoder(cipher, input, output); */
 
     ASSERT_EQ(1, 1);
 }
