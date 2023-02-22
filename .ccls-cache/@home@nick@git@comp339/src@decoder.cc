@@ -3,24 +3,36 @@
 using namespace std;
 
 /* Decoded decoder(Cipher cipher, istream &input) */
-void decoder(const Cipher &cipher, istream &input, ostream &output)
+CipherMap decoder(const Cipher &cipher) 
 /** Create a grouping of decoded sentences and their shifts */
 {
+    /* Populate mapping */
+    CipherMap encoded;
+
     map<string, int> dictionary = parse_dict(cipher);
-    string line;
-    while (getline(input, line)) {
+    string nline;
+    while (getline(cipher.input, nline)) {
+        /* Skip blank, strip metadata */
+        if (nline == "")
+            continue;
+        string line = strip_metadata(nline);
+
         vector<string> words = split_line(line, cipher.min_len);
         int shift = decode(words, dictionary);
-        vector<string> collect = collect_words(words, shift_left, shift);
-        if (cipher.output == "")
-            cout << "SHIFT => " << shift << " WORDS => ";
-        output_words(collect, output);
+        /* Output header if output is cout */
+        if (cipher.std_out == "")
+            cout << "\nSHIFT => " << shift << " WORDS => ";
+        vector<string> collect = collect_words(words, 
+                                        shift_left,
+                                        cipher.output,
+                                        shift);
+        encoded[collect] = shift;
     }
+    return encoded;
 }
 
 int main(int argc, char **argv)
 /** 
-name output text (of shift values) to filename (if absent, write to standard output)
 The decoder does the following:
     - Reads one line of input at a time.
     - Parses the line of input into words. A word is any continuous sequence of letters from the alphabet.
@@ -30,16 +42,9 @@ The decoder does the following:
     - You can also write the decoder to succeed if most of the words are decoded. This could be an additional command line option, e.g. --threshold=percentage.
 */
 {
-    Cipher cipher;
+    Cipher cipher = build_cipher(argc, argv);
 
-    int option = parse_args(cipher, argc, argv);
-    if (option == 0 || option == 1) exit(option);
-
-    /* Handle IO */
-    istream &input = in_stream(cipher.input);
-    ostream &output = out_stream(cipher.output);
-
-    decoder(cipher, input, output);
+    CipherMap cmap = decoder(cipher);
 
     return 0;
 }

@@ -55,13 +55,13 @@ CipherMap encoder(const Cipher &cipher, istream &input, ostream &output);
 CipherIter read_text(Cipher cipher, istream &input);
 CipherIter gen_text(const Cipher &cipher);
 
-void decoder(const Cipher &cipher, istream &input, ostream &output);
+CipherMap decoder(const Cipher &cipher);
 
 /* IO streams */
 istream &in_stream(string &input);
 ostream &out_stream(string &output);
 
-void output_words(vector<string> &words, ostream &output);
+string strip_metadata(string &nline);
 
 int rng(const int min, const int max);
 int decode(vector<string> &words, map<string, int> &dictionary);
@@ -77,3 +77,4 @@ vector<string> collect_words(vector<string> &words,
                              const int shift);
 vector<string> split_line(string &line, const int min_len);
 map<string, int> parse_dict(const Cipher &cipher);
+void output_words(vector<string> &words, ostream &output);

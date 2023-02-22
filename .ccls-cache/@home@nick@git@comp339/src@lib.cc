@@ -14,6 +14,20 @@ int rng(const int min, const int max)
     return dist(eng);
 }
 
+string strip_metadata(string &nline)
+/** Strip metadata to make text pipe-able */
+{
+    size_t pos = nline.find("WORDS =>");
+    string line;
+    if (pos != string::npos) {
+        line = nline.substr(pos + 8); 
+        // Trim leading and trailing spaces
+        line.erase(0, line.find_first_not_of(" \t"));
+        line.erase(line.find_last_not_of(" \t") + 1);
+    }
+    return line;
+}
+
 string convert_alpha(string &word)
 /** Convert each character to an upper-case american english letter */ 
 {

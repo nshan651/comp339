@@ -29,9 +29,13 @@ CipherIter read_text(Cipher cipher)
 /** Return an iterator of text read from stdin */
 {
     vector<vector<string>> lines;
-    string line;
-    while (getline(cipher.input, line)) 
+    string nline;
+    while (getline(cipher.input, nline)) {
+        if (nline == "")
+            continue;
+        string line = strip_metadata(nline);
         lines.push_back(split_line(line, cipher.min_len));
+    }
     return lines;
 }
 
@@ -47,12 +51,12 @@ CipherMap encoder(const Cipher &cipher)
         int shift = rng(1, ALPHABET_SIZE);
         /* Output header if output is cout */
         if (cipher.std_out == "")
-            cipher.output << "\nSHIFT => " << shift << " WORDS => ";
-        vector<string> encode_line = collect_words(words, 
+            cout << "\nSHIFT => " << shift << " WORDS => ";
+        vector<string> collect = collect_words(words, 
                                         shift_right,
                                         cipher.output,
                                         shift);
-        encoded[encode_line] = shift;
+        encoded[collect] = shift;
     });
     return encoded;
 }
