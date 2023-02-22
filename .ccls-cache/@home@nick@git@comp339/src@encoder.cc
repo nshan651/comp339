@@ -38,16 +38,9 @@ CipherIter read_text(Cipher cipher)
 /* CipherMap encoder(const Cipher &cipher, istream &input, ostream &output) */
 CipherMap encoder(const Cipher &cipher)
 {
-    /* CipherIter iter; */
-    /* if (cipher.std_in) */ 
-    /*     iter = gen_text(cipher); */
-    /* else */ 
-    /*     iter = read_text(cipher); */
-
     /* Iterater over input */
     CipherIter iter = (cipher.std_in == "") ? gen_text(cipher) 
                                         : read_text(cipher);
-    
     /* Populate mapping */
     CipherMap encoded;
     for_each(iter.begin(), iter.end(), [&](auto &words) {
@@ -74,15 +67,8 @@ The encoder does the following:
     -The output lines may either be directed to standard output or to a file.
 */
 {
-    Cipher cipher(cin, cout);
-
-    /* Parse CLI */
-    int option = parse_args(cipher, argc, argv);
-    if (option == 0 || option == 1) exit(option);
-
-    /* Handle IO */
-    /* istream &input = in_stream(cipher.input); */
-    /* ostream &output = out_stream(cipher.output); */
+    /* Create a cipher based on CLI */
+    Cipher cipher = build_cipher(argc, argv);
 
     CipherMap cmap = encoder(cipher);
 

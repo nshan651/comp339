@@ -23,20 +23,33 @@ const string PROJ_DIR = "./data/";
 const int ALPHABET_SIZE = 26;
 
 struct Cipher {
-    istream &input;
-    ostream &output;
+    istream &input = cin;
+    ostream &output = cout;
+    int num_lines;
+    int min_len;
+    string dict;
+    string std_in; 
+    string std_out; 
 
-    int num_lines = 10;
-    int min_len = 3;
-    string dict = PROJ_DIR + "american-english";
-    string std_in = ""; 
-    string std_out = ""; 
-    
-    /* Reference istream and ostream by passing in defaults */
-    Cipher(istream& input_, ostream& output_): input{input_}, output{output_}{}
-
+    /* Constructor reference istream and ostream by passing in defaults */
+    Cipher(istream& input_ = cin, 
+            ostream& output_ = cout, 
+            int num_lines_ = 10, 
+            int min_len_ = 3, 
+            string dict_ = PROJ_DIR + "american-english",
+            string std_in_ = "",
+            string std_out_ = ""
+        )
+        : input{input_}, 
+          output{output_}, 
+          num_lines{num_lines_}, 
+          min_len{min_len_}, 
+          dict{dict_}, 
+          std_in{std_in_}, 
+          std_out{std_out_} {}
 };
 
+Cipher build_cipher(int argc, char **argv);
 /* Encoder */
 CipherMap encoder(const Cipher &cipher, istream &input, ostream &output);
 CipherIter read_text(Cipher cipher, istream &input);
@@ -45,15 +58,14 @@ CipherIter gen_text(const Cipher &cipher);
 void decoder(const Cipher &cipher, istream &input, ostream &output);
 
 /* IO streams */
-istream in_stream(const string &input);
-ostream out_stream(const string &output);
+istream &in_stream(string &input);
+ostream &out_stream(string &output);
 
 void output_words(vector<string> &words, ostream &output);
 
 int rng(const int min, const int max);
 int decode(vector<string> &words, map<string, int> &dictionary);
 vector<string> encode(vector<string> &words, int shift);
-int parse_args(Cipher &cipher, int argc, char **argv);
 
 string convert_alpha(string &word);
 string shift_left(const string word, const int shift);

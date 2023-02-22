@@ -28,7 +28,7 @@ target_link_libraries(
 add_executable(
   encoder 
   encoder.cc
-  parse_args.cc
+  build_cipher.cc
 )
 target_link_libraries(encoder common)
 
