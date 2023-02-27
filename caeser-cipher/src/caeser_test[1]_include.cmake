@@ -1,0 +1,5 @@
+if(EXISTS "/home/nick/git/comp339/caeser-cipher/src/caeser_test[1]_tests.cmake")
+  include("/home/nick/git/comp339/caeser-cipher/src/caeser_test[1]_tests.cmake")
+else()
+  add_test(caeser_test_NOT_BUILT caeser_test_NOT_BUILT)
+endif()
