@@ -1,3 +1,6 @@
+# Language server cache
+.ccls-cache/
+
 # Prerequisites
 *.d
 

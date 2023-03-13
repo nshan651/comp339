@@ -1,7 +1,4 @@
 #include <lib.hh>
-/* #include <openssl/md5.h> */ // DEPRECATED
-#include <openssl/sha.h>
-#include <openssl/evp.h>
 #include <CLI/CLI.hpp>
 
 using namespace std;
@@ -28,11 +25,12 @@ public:
             data[i] = 0;
     }
 
-    void insert(const string &element)
+    void insert(const string &element, hash_func *hf)
     /** Insert hash into Bloom Filter. */
     {
         for (int i = 1; i <= k; i++) {
-            int hash = hash_sha256(element) % m;
+            /* int hash = hash_sha256(element) % m; */
+            int hash = hf[i](element) % m;
             data[hash] = 1;
         }
         n++;
@@ -49,23 +47,14 @@ public:
             vhash.push_back(hash);
         }
         /* Check if hashes in vhash are found in filter */
-        for (size_t hash : vhash) {
-            cout << "RESULT OF DATA[HASH]: " << data[hash] << "\n";
+        for (size_t hash : vhash)
             if (data[hash] == 0)
                 return "Not in Bloom Filter\n";
-        }
         
         double prob = pow((1.0 - pow((1.0 - 1.0/m), k*n)), k);
         return "Might be in Bloom Filter with false positive probability " + to_string(prob) + "\n";
     }
 
-    size_t hash_sha256(const string &word) 
-    {
-        unsigned char *hash = SHA256((unsigned char*)word.c_str(), word.length(), NULL);
-        char base64_hash[9];
-        EVP_EncodeBlock((unsigned char*)base64_hash, hash, 6);
-        return std::hash<string>{}(base64_hash) % 10;
-    }
 
     /** Accessors */
     int *get_data()
@@ -88,10 +77,16 @@ public:
     }
 };
 
-
-
 int main(int argc, char **argv) 
 {
+    /* Define an array of hash functions to use */
+    hash_func hash_functions[] = {
+        hash_sha1,
+        hash_sha256,
+        hash_sha512,
+        hash_ripemd160,
+        hash_whirlpool 
+    };
 
     int m = 0;
     int k = 0;
@@ -124,8 +119,8 @@ int main(int argc, char **argv)
     }
     */
 
-    bf.insert("hello");
-    bf.insert("world");
+    bf.insert("hello", hash_functions);
+    bf.insert("world", hash_functions);
 
     /* int *data = bf.get_data(); */
     /* for (int i = 0; i < bf.get_m(); i++) */
@@ -133,8 +128,9 @@ int main(int argc, char **argv)
 
     // "Might be in Bloom Filter with false positive probability 0.00675961"
     cout << bf.search("hello"); 
-    // Not in Bloom Filter
+    /* // Not in Bloom Filter */
     cout << bf.search("goodbye"); 
+    cout << bf.search("No way this is in it"); 
     return 0;
 }
 

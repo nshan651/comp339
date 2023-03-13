@@ -11,6 +11,7 @@ add_library(common SHARED lib.cc)
 add_executable(
   bloom 
   bloom.cc
+  hash.cc
 )
 # target_compile_definitions(caeser_test PRIVATE -DSOME_MACRO)
 target_link_libraries(
