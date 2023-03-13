@@ -5,7 +5,7 @@ FetchContent_MakeAvailable(cli11)
 enable_testing()
 
 # Common library
-# add_library(common SHARED lib.cc streams.cc)
+add_library(common SHARED lib.cc)
 
 # main
 add_executable(
@@ -16,6 +16,7 @@ add_executable(
 target_link_libraries(
   bloom PRIVATE CLI11::CLI11
   crypto
+  common
 )
 
 # Decoder
