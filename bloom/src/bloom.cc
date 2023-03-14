@@ -1,8 +1,6 @@
 #include <lib.hh>
 #include <CLI/CLI.hpp>
 
-using namespace std;
-
 class BloomFilter 
 {
     int m, k, n;
@@ -25,25 +23,31 @@ public:
             data[i] = 0;
     }
 
-    void insert(const string &element, hash_func *hf)
+    /* void insert(const string &element, hash_func *hf) */
+    void insert(const string& element, const vector<hash_func*> &hs)
     /** Insert hash into Bloom Filter. */
     {
-        for (int i = 1; i <= k; i++) {
+        /* for (int i = 1; i <= k; i++) { */
+        for (auto hf : hs) {
             /* int hash = hash_sha256(element) % m; */
-            int hash = hf[i](element) % m;
+            /* int hash = hs[i](element) % m; */
+            int hash = (*hf)(element) % m;
             data[hash] = 1;
         }
         n++;
     }
 
-    string search(const string &element)
+    /* string search(const string &element, hash_func *hf) */
+    string search(const string& element, const vector<hash_func*> &hs)
     /** Search for a hash in the Bloom Filter. */
     {
         /* vector<size_t> vhash; */
         vector<size_t> vhash;
         /* Collect hashes for k */
-        for (int i = 0; i < k; i++) {
-            size_t hash = hash_sha256(element) % m;
+        /* for (int i = 0; i < k; i++) { */
+        for (auto hf : hs) {
+            /* size_t hash = hf[i](element) % m; */
+            size_t hash = (*hf)(element) % m;
             vhash.push_back(hash);
         }
         /* Check if hashes in vhash are found in filter */
@@ -80,13 +84,18 @@ public:
 int main(int argc, char **argv) 
 {
     /* Define an array of hash functions to use */
-    hash_func hash_functions[] = {
-        hash_sha1,
-        hash_sha256,
-        hash_sha512,
-        hash_ripemd160,
-        hash_whirlpool 
-    };
+    /* hash_func hash_functions[] = { */
+    /*     hash_sha1, */
+    /*     hash_sha256, */
+    /*     hash_sha512, */
+    /*     /1* hash_ripemd160, *1/ */
+    /*     /1* hash_whirlpool *1/ */ 
+    /* }; */
+    vector<hash_func*> hs;
+    hs.push_back(hash_sha256());
+    hs.push_back(hash_sha256());
+    /* hs.push_back(hash_sha1); */
+    /* hs.push_back(hash_sha512); */
 
     int m = 0;
     int k = 0;
@@ -119,18 +128,14 @@ int main(int argc, char **argv)
     }
     */
 
-    bf.insert("hello", hash_functions);
-    bf.insert("world", hash_functions);
-
-    /* int *data = bf.get_data(); */
-    /* for (int i = 0; i < bf.get_m(); i++) */
-    /*     cout << data[i] << "\n"; */
+    bf.insert("hello", hs);
+    bf.insert("world", hs);
 
     // "Might be in Bloom Filter with false positive probability 0.00675961"
-    cout << bf.search("hello"); 
+    cout << bf.search("hello", hs);
     /* // Not in Bloom Filter */
-    cout << bf.search("goodbye"); 
-    cout << bf.search("No way this is in it"); 
+    cout << bf.search("goodbye", hs); 
+    cout << bf.search("No way this is in it", hs); 
     return 0;
 }
 
