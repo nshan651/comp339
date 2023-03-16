@@ -1,9 +1,15 @@
 #include <lib.hh>
 #include <CLI/CLI.hpp>
 
+
+ifstream readFile(const string& fileName) {
+    ifstream file(fileName);
+    return file;
+}
+
 class BloomFilter 
 {
-    int m, k, n;
+    int m, k, n, collisions;
     int *data;
 
 public:
@@ -17,6 +23,8 @@ public:
         this->m = m;
         this->k = k;
         this->n = 0;
+        this->collisions = 0;
+
         this->data = new int[m];
         memset(this->data, 0, m*sizeof(int));
         for (int i = 0; i < sizeof(data); i++)
@@ -29,8 +37,6 @@ public:
     {
         /* for (int i = 1; i <= k; i++) { */
         for (auto hf : hs) {
-            /* int hash = hash_sha256(element) % m; */
-            /* int hash = hs[i](element) % m; */
             int hash = (*hf)(element) % m;
             data[hash] = 1;
         }
@@ -56,6 +62,8 @@ public:
                 return "Not in Bloom Filter\n";
         
         double prob = pow((1.0 - pow((1.0 - 1.0/m), k*n)), k);
+        double optimal_k = log(2) * m/n;
+        /* cout << "Optimal k hashes " << optimal_k << endl; */
         return "Might be in Bloom Filter with false positive probability " + to_string(prob) + "\n";
     }
 
@@ -69,9 +77,17 @@ public:
     {
         return m;
     }
+    int get_n()
+    {
+        return n;
+    }
     int get_k()
     {
-        return m;
+        return k;
+    }
+    int get_collisions()
+    {
+        return collisions;
     }
 
     ~BloomFilter() 
@@ -84,18 +100,11 @@ public:
 int main(int argc, char **argv) 
 {
     /* Define an array of hash functions to use */
-    /* hash_func hash_functions[] = { */
-    /*     hash_sha1, */
-    /*     hash_sha256, */
-    /*     hash_sha512, */
-    /*     /1* hash_ripemd160, *1/ */
-    /*     /1* hash_whirlpool *1/ */ 
-    /* }; */
     vector<hash_func*> hs;
     hs.push_back(hash_sha256());
-    hs.push_back(hash_sha256());
+    hs.push_back(hash_sha512());
+    hs.push_back(hash_whirlpool());
     /* hs.push_back(hash_sha1); */
-    /* hs.push_back(hash_sha512); */
 
     int m = 0;
     int k = 0;
@@ -111,31 +120,35 @@ int main(int argc, char **argv)
     BloomFilter bf(m, k);
 
     string dict = "./data/american-english";
-    map<string, int> dictionary = parse_dict(dict);
+    ifstream infile(dict); // open the file for input
+    string word;
 
-    /*
-    for (auto it = dictionary.begin(); it != dictionary.end(); ++it) {
-        string str = it->first;
-        vector<string> lines = split_line(str, 0);
+    cout << "Size: " << bf.get_n() << endl;
 
-        for (auto &line : lines)
-            bf.insert(line);
-
-        for (auto &line : lines)
-            cout << bf.search(line) << "\n";
-
-        cout << it->first << endl;
+    /* Insert all words in the dictionary */
+    while (infile >> word) {
+        bf.insert(word, hs);
     }
-    */
+    infile.close();
 
-    bf.insert("hello", hs);
-    bf.insert("world", hs);
+    string dict2 = "./data/american-english";
+    ifstream infile2(dict2); // open the file for input
+    string word2;
+    /* Search each word for collisions */
+    while (infile2 >> word2) {
+        bf.search(word2, hs);
+    }
+    infile2.close();
 
+    /* cout << bf.search("hello", hs); */
+    /* bf.insert("hello", hs); */
+    /* bf.insert("No way this is in it", hs); */
+    /* bf.insert("world", hs); */
     // "Might be in Bloom Filter with false positive probability 0.00675961"
-    cout << bf.search("hello", hs);
-    /* // Not in Bloom Filter */
-    cout << bf.search("goodbye", hs); 
-    cout << bf.search("No way this is in it", hs); 
+    /* cout << bf.search("hello", hs); */
+    // Not in Bloom Filter
+    /* cout << bf.search("goodbye", hs); */ 
+    /* cout << bf.search("No way this is in it", hs); */ 
     return 0;
 }
 
