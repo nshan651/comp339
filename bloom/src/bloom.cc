@@ -1,15 +1,9 @@
 #include <lib.hh>
 #include <CLI/CLI.hpp>
 
-
-ifstream readFile(const string& fileName) {
-    ifstream file(fileName);
-    return file;
-}
-
 class BloomFilter 
 {
-    int m, k, n, collisions;
+    int m, k, n;
     int *data;
 
 public:
@@ -23,7 +17,6 @@ public:
         this->m = m;
         this->k = k;
         this->n = 0;
-        this->collisions = 0;
 
         this->data = new int[m];
         memset(this->data, 0, m*sizeof(int));
@@ -31,13 +24,12 @@ public:
             data[i] = 0;
     }
 
-    /* void insert(const string &element, hash_func *hf) */
     void insert(const string& element, const vector<hash_func*> &hs)
     /** Insert hash into Bloom Filter. */
     {
         /* for (int i = 1; i <= k; i++) { */
         for (auto hf : hs) {
-            int hash = (*hf)(element) % m;
+            size_t hash = (*hf)(element) % m;
             data[hash] = 1;
         }
         n++;
@@ -47,26 +39,26 @@ public:
     string search(const string& element, const vector<hash_func*> &hs)
     /** Search for a hash in the Bloom Filter. */
     {
-        /* vector<size_t> vhash; */
         vector<size_t> vhash;
         /* Collect hashes for k */
-        /* for (int i = 0; i < k; i++) { */
         for (auto hf : hs) {
-            /* size_t hash = hf[i](element) % m; */
+
+            /* cout << "Trying Hash" << endl; */
             size_t hash = (*hf)(element) % m;
             vhash.push_back(hash);
         }
         /* Check if hashes in vhash are found in filter */
-        for (size_t hash : vhash)
+        for (size_t hash : vhash) {
+            cout << data[hash] << endl;
             if (data[hash] == 0)
                 return "Not in Bloom Filter\n";
+        }
         
         double prob = pow((1.0 - pow((1.0 - 1.0/m), k*n)), k);
         double optimal_k = log(2) * m/n;
         /* cout << "Optimal k hashes " << optimal_k << endl; */
         return "Might be in Bloom Filter with false positive probability " + to_string(prob) + "\n";
     }
-
 
     /** Accessors */
     int *get_data()
@@ -85,10 +77,6 @@ public:
     {
         return k;
     }
-    int get_collisions()
-    {
-        return collisions;
-    }
 
     ~BloomFilter() 
     /** Destructor. */
@@ -101,10 +89,16 @@ int main(int argc, char **argv)
 {
     /* Define an array of hash functions to use */
     vector<hash_func*> hs;
-    hs.push_back(hash_sha256());
     hs.push_back(hash_sha512());
+    hs.push_back(hash_sha512());
+    hs.push_back(hash_sha512());
+    hs.push_back(hash_sha512());
+    hs.push_back(hash_sha512());
+    hs.push_back(hash_sha256());
     hs.push_back(hash_whirlpool());
-    /* hs.push_back(hash_sha1); */
+    hs.push_back(hash_ripemd160());
+
+    /* hs.push_back(hash_sha3()); */
 
     int m = 0;
     int k = 0;
@@ -119,11 +113,14 @@ int main(int argc, char **argv)
 
     BloomFilter bf(m, k);
 
-    string dict = "./data/american-english";
-    ifstream infile(dict); // open the file for input
+    /* string dict = "./data/american-english"; */
+    string dict = "./data/hamlet.txt";
+    ifstream infile(dict);
     string word;
 
-    cout << "Size: " << bf.get_n() << endl;
+
+    /* bf.insert("hello", hs); */
+    /* bf.insert("world", hs); */
 
     /* Insert all words in the dictionary */
     while (infile >> word) {
@@ -131,24 +128,20 @@ int main(int argc, char **argv)
     }
     infile.close();
 
-    string dict2 = "./data/american-english";
-    ifstream infile2(dict2); // open the file for input
-    string word2;
-    /* Search each word for collisions */
-    while (infile2 >> word2) {
-        bf.search(word2, hs);
-    }
-    infile2.close();
+    cout << bf.search("hello", hs);
+    cout << bf.search("goodbye", hs); 
+    cout << bf.search("No way this is in it", hs); 
+    cout << bf.search("dalwjndh9a7wd2 d[092qjod28 d210d2", hs); 
+
+
+    cout << "Size: " << bf.get_n() << endl;
+
+    /* cout << bf.search("doanwd; ajnwd ;janw90u9y82n ;dnawdi0 -901uldnalwda;lw", hs); */
 
     /* cout << bf.search("hello", hs); */
-    /* bf.insert("hello", hs); */
-    /* bf.insert("No way this is in it", hs); */
-    /* bf.insert("world", hs); */
     // "Might be in Bloom Filter with false positive probability 0.00675961"
     /* cout << bf.search("hello", hs); */
     // Not in Bloom Filter
-    /* cout << bf.search("goodbye", hs); */ 
-    /* cout << bf.search("No way this is in it", hs); */ 
     return 0;
 }
 
