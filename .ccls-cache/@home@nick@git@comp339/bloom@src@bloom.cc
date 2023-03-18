@@ -27,9 +27,8 @@ public:
     void insert(const string& element, const vector<hash_func*> &hs)
     /** Insert hash into Bloom Filter. */
     {
-        /* for (int i = 1; i <= k; i++) { */
-        for (auto hf : hs) {
-            size_t hash = (*hf)(element) % m;
+        for (auto fun : hs) {
+            size_t hash = (*fun)(element, m) % m;
             data[hash] = 1;
         }
         n++;
@@ -39,24 +38,12 @@ public:
     string search(const string& element, const vector<hash_func*> &hs)
     /** Search for a hash in the Bloom Filter. */
     {
-        vector<size_t> vhash;
-        /* Collect hashes for k */
-        for (auto hf : hs) {
-
-            /* cout << "Trying Hash" << endl; */
-            size_t hash = (*hf)(element) % m;
-            vhash.push_back(hash);
-        }
-        /* Check if hashes in vhash are found in filter */
-        for (size_t hash : vhash) {
-            cout << data[hash] << endl;
+        for (auto fun : hs) {
+            size_t hash = (*fun)(element, m) % m;
             if (data[hash] == 0)
                 return "Not in Bloom Filter\n";
         }
-        
-        double prob = pow((1.0 - pow((1.0 - 1.0/m), k*n)), k);
-        double optimal_k = log(2) * m/n;
-        /* cout << "Optimal k hashes " << optimal_k << endl; */
+        double prob = pow(1.0 - pow(1.0 - 1.0/m, k*n), k);
         return "Might be in Bloom Filter with false positive probability " + to_string(prob) + "\n";
     }
 
@@ -88,17 +75,14 @@ public:
 int main(int argc, char **argv) 
 {
     /* Define an array of hash functions to use */
-    vector<hash_func*> hs;
-    hs.push_back(hash_sha512());
-    hs.push_back(hash_sha512());
-    hs.push_back(hash_sha512());
-    hs.push_back(hash_sha512());
-    hs.push_back(hash_sha512());
-    hs.push_back(hash_sha256());
-    hs.push_back(hash_whirlpool());
-    hs.push_back(hash_ripemd160());
+    vector<hash_func*> hashes;
 
-    /* hs.push_back(hash_sha3()); */
+    hashes.push_back(hash_sha512());
+    /* hashes.push_back(hash_sha256()); */
+    /* hashes.push_back(hash_whirlpool()); */
+    /* hashes.push_back(hash_sha256()); */
+    /* hashes.push_back(hash_ripemd160()); */
+    /* hashes.push_back(hash_blake2()); */
 
     int m = 0;
     int k = 0;
@@ -111,37 +95,31 @@ int main(int argc, char **argv)
 
     CLI11_PARSE(app, argc, argv);
 
+    /* Slice the list of available hash functions according to k */
+    int end_slice = k < hashes.size() ? k : hashes.size();
+    vector<hash_func*> hs(hashes.begin(), hashes.begin() + end_slice);
+
     BloomFilter bf(m, k);
 
     /* string dict = "./data/american-english"; */
     string dict = "./data/hamlet.txt";
     ifstream infile(dict);
     string word;
-
-
-    /* bf.insert("hello", hs); */
-    /* bf.insert("world", hs); */
-
     /* Insert all words in the dictionary */
     while (infile >> word) {
         bf.insert(word, hs);
     }
     infile.close();
+    
+    /* bf.insert("Hello", hs); */
 
-    cout << bf.search("hello", hs);
-    cout << bf.search("goodbye", hs); 
-    cout << bf.search("No way this is in it", hs); 
-    cout << bf.search("dalwjndh9a7wd2 d[092qjod28 d210d2", hs); 
+    cout << bf.search("Hello", hs);
+    cout << bf.search("No Way", hs); 
+    cout << bf.search("ge", hs); 
+    cout << bf.search("Etexts", hs); 
+    cout << bf.search("absurdlylongoeija2neoia2d92 dlawkd djawid aidloaiwd dakwjdnao2d99a2da2", hs); 
 
-
-    cout << "Size: " << bf.get_n() << endl;
-
-    /* cout << bf.search("doanwd; ajnwd ;janw90u9y82n ;dnawdi0 -901uldnalwda;lw", hs); */
-
-    /* cout << bf.search("hello", hs); */
-    // "Might be in Bloom Filter with false positive probability 0.00675961"
-    /* cout << bf.search("hello", hs); */
-    // Not in Bloom Filter
+    /* cout << "Size: " << bf.get_n() << endl; */
     return 0;
 }
 

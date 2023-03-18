@@ -17,6 +17,7 @@ add_executable(
 target_link_libraries(
   bloom PRIVATE CLI11::CLI11
   crypto
+  b2
   common
 )
 
