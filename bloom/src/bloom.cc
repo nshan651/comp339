@@ -85,12 +85,14 @@ int main(int argc, char **argv)
 
     int m = 0;
     int k = 0;
+    string input = "./data/american-english";
 
     CLI::App app("BloomFilter CLI");
 
     /* app.add_option("-m", m, "Number of bits")->required(); */
     app.add_option("-m", m, "Number of bits")->default_val(100);
     app.add_option("-k", k, "Number of hash functions")->default_val(2);
+    app.add_option("-i", input, "Input file")->default_val("./data/american-english");
 
     CLI11_PARSE(app, argc, argv);
 
@@ -101,20 +103,14 @@ int main(int argc, char **argv)
     /* Put bf on the heap */
     BloomFilter* bf = new BloomFilter(m, k);
 
-    string dict = "./data/american-english";
     /* string dict = "./data/hamlet.txt"; */
-    ifstream infile(dict);
+    ifstream infile(input);
     string word;
     /* Insert all words in the dictionary */
-    while (infile >> word) {
-        /* bf.insert(word, hs); */
+    while (infile >> word) 
         bf->insert(word, hs);
-    }
     infile.close();
     
-    /* cout << bf->search("Hello", hs); */
-    /* cout << bf->search("No Way", hs); */ 
-    /* cout << bf->search("ge", hs); */ 
     cout << bf->search("Hello", hs);
     cout << bf->search("No Way", hs); 
     cout << bf->search("ge", hs); 
