@@ -97,7 +97,8 @@ int main(int argc, char **argv)
     int end_slice = k < hashes.size() ? k : hashes.size();
     vector<lamb_hash> hs(hashes.begin(), hashes.begin() + end_slice);
 
-    BloomFilter bf(m, k);
+    /* Put bf on the heap */
+    BloomFilter* bf = new BloomFilter(m, k);
 
     string dict = "./data/american-english";
     /* string dict = "./data/hamlet.txt"; */
@@ -105,13 +106,17 @@ int main(int argc, char **argv)
     string word;
     /* Insert all words in the dictionary */
     while (infile >> word) {
-        bf.insert(word, hs);
+        /* bf.insert(word, hs); */
+        bf->insert(word, hs);
     }
     infile.close();
     
-    cout << bf.search("Hello", hs);
-    cout << bf.search("No Way", hs); 
-    cout << bf.search("ge", hs); 
+    cout << bf->search("Hello", hs);
+    cout << bf->search("No Way", hs); 
+    cout << bf->search("ge", hs); 
+    
+    /* Deallocate when finished */
+    delete bf; 
 
     return 0;
 }
