@@ -40,8 +40,9 @@ public:
     {
         for (auto fun : hs) {
             size_t hash = fun(element, m) % m;
-            if (data[hash] == 0)
+            if (data[hash] == 0) {
                 return "Not in Bloom Filter\n";
+            }
         }
         double prob = pow(1.0 - pow(1.0 - 1.0/m, k*n), k);
         return "Might be in Bloom Filter with false positive probability " + to_string(prob) + "\n";
@@ -111,6 +112,9 @@ int main(int argc, char **argv)
     }
     infile.close();
     
+    /* cout << bf->search("Hello", hs); */
+    /* cout << bf->search("No Way", hs); */ 
+    /* cout << bf->search("ge", hs); */ 
     cout << bf->search("Hello", hs);
     cout << bf->search("No Way", hs); 
     cout << bf->search("ge", hs); 
