@@ -1,5 +1,8 @@
-#include <lib.hh>
+#include <bloom.hh>
+#include <hash.hh>
 #include <CLI/CLI.hpp>
+
+using namespace std;
 
 class BloomFilter 
 {
@@ -20,26 +23,23 @@ public:
 
         this->data = new int[m];
         memset(this->data, 0, m*sizeof(int));
-        for (int i = 0; i < sizeof(data); i++)
-            data[i] = 0;
     }
 
-    void insert(const string& element, const vector<hash_func*> &hs)
+    void insert(const string& element, const vector<lamb_hash> &hs)
     /** Insert hash into Bloom Filter. */
     {
         for (auto fun : hs) {
-            size_t hash = (*fun)(element, m) % m;
+            size_t hash = fun(element, m) % m;
             data[hash] = 1;
         }
         n++;
     }
 
-    /* string search(const string &element, hash_func *hf) */
-    string search(const string& element, const vector<hash_func*> &hs)
+    string search(const string& element, const vector<lamb_hash> &hs)
     /** Search for a hash in the Bloom Filter. */
     {
         for (auto fun : hs) {
-            size_t hash = (*fun)(element, m) % m;
+            size_t hash = fun(element, m) % m;
             if (data[hash] == 0)
                 return "Not in Bloom Filter\n";
         }
@@ -75,14 +75,12 @@ public:
 int main(int argc, char **argv) 
 {
     /* Define an array of hash functions to use */
-    vector<hash_func*> hashes;
-
-    hashes.push_back(hash_sha512());
-    /* hashes.push_back(hash_sha256()); */
-    /* hashes.push_back(hash_whirlpool()); */
-    /* hashes.push_back(hash_sha256()); */
-    /* hashes.push_back(hash_ripemd160()); */
-    /* hashes.push_back(hash_blake2()); */
+    vector<lamb_hash> hashes;
+    hashes.push_back(sha512);
+    hashes.push_back(whirlpool);
+    hashes.push_back(sha256);
+    hashes.push_back(ripemd160);
+    /* hashes.push_back(blake2); */
 
     int m = 0;
     int k = 0;
@@ -97,12 +95,12 @@ int main(int argc, char **argv)
 
     /* Slice the list of available hash functions according to k */
     int end_slice = k < hashes.size() ? k : hashes.size();
-    vector<hash_func*> hs(hashes.begin(), hashes.begin() + end_slice);
+    vector<lamb_hash> hs(hashes.begin(), hashes.begin() + end_slice);
 
     BloomFilter bf(m, k);
 
-    /* string dict = "./data/american-english"; */
-    string dict = "./data/hamlet.txt";
+    string dict = "./data/american-english";
+    /* string dict = "./data/hamlet.txt"; */
     ifstream infile(dict);
     string word;
     /* Insert all words in the dictionary */
@@ -111,15 +109,10 @@ int main(int argc, char **argv)
     }
     infile.close();
     
-    /* bf.insert("Hello", hs); */
-
     cout << bf.search("Hello", hs);
     cout << bf.search("No Way", hs); 
     cout << bf.search("ge", hs); 
-    cout << bf.search("Etexts", hs); 
-    cout << bf.search("absurdlylongoeija2neoia2d92 dlawkd djawid aidloaiwd dakwjdnao2d99a2da2", hs); 
 
-    /* cout << "Size: " << bf.get_n() << endl; */
     return 0;
 }
 
