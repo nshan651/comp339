@@ -11,6 +11,7 @@ OPTIM_K="$MAX_K"
 
 for k in $(seq 1 "$MAX_K")
 do
+    echo "k is $k"
     for m in $(seq "$MIN_M" "$MAX_M")
     do
         # ./bin/bloom -m "$m" -k "$k"
@@ -26,6 +27,8 @@ do
                 OPTIM_M=$m
                 echo "New m and k found!"
             fi
+            echo "k = $k  m = $m."
+            break
         fi
     done
 done
