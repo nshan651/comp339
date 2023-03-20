@@ -18,7 +18,8 @@ target_fpos = 0.05
 bits = []
 probs = []
 for k in range(2, 3):
-    for m in tqdm(range(1015150, n, -15000)):
+    # for m in tqdm(range(1015150, n, -15000)):
+    for m in tqdm(range(1015150, n, -1500)):
         f_prob: float = (1.0 - ((1.0 - 1.0/m)**(k*n))) ** k
         output = sp.check_output(
             f"./bin/bloom -m {m} -k {k} -s 'Hello,No Way,ge'", 

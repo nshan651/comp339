@@ -6,6 +6,12 @@
     - `g++ -o bloom_filter bloom.cc -lcrypto`
     - Adds `libcrypto` library to linker
 
+## Optimal M and K Values
+
+- Here is my analysis for the optimal bits for when $k=2$ and $steps=-1500$
+
+![Filter Results](./data/filter_results.png)
+
 ## Notes
 
 - Optimal hash functions:
