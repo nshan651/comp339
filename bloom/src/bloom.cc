@@ -27,7 +27,6 @@ public:
         memset(this->data, 0, m*sizeof(int));
     }
 
-    /* void insert(const string& element, const vector<lamb_hash> &hs) */
     void insert(const string& element)
     /** Insert hash into Bloom Filter. */
     {
@@ -39,7 +38,6 @@ public:
     }
 
     double search(const string& element)
-    /* string search(const string& element, const vector<lamb_hash> &hs) */
     /** Search for a hash in the Bloom Filter. */
     {
         for (auto fun : hash_set) {
