@@ -45,15 +45,13 @@ public:
         for (auto fun : hash_set) {
             size_t hash = fun(element, m) % m;
             if (data[hash] == 0) {
-                cout << "Not in Bloom Filter\n";
+                /* cout << "Not in Bloom Filter\n"; */
                 return -1.0;
-                /* return "Not in Bloom Filter\n"; */
             }
         }
         double prob = pow(1.0 - pow(1.0 - 1.0/m, k*n), k);
-        cout << "Might be in Bloom Filter with false positive probability " << to_string(prob) << "\n";
+        /* cout << "Might be in Bloom Filter with false positive probability " << to_string(prob) << "\n"; */
         return prob;
-        /* return "Might be in Bloom Filter with false positive probability " + to_string(prob) + "\n"; */
     }
 
     /** Accessors */
@@ -94,14 +92,13 @@ int init(const int m,
     /* Insert all words in the dictionary */
     ifstream infile(input);
     string word;
-    while (infile >> word) {
+    while (infile >> word)
         bf->insert(word);
-    }
     infile.close();
    
     /* Search all keywords */
     for (auto& keyword : keywords) 
-        bf->search(keyword);
+        cout << bf->search(keyword) << " ";
 
     /* Deallocate when finished */
     delete bf; 
@@ -130,7 +127,7 @@ int main(int argc, char **argv)
     app.add_option("-m", m, "Number of bits")->default_val(100);
     app.add_option("-k", k, "Number of hash functions")->default_val(2);
     app.add_option("-i", input, "Input method")->default_val("./data/american-english");
-    app.add_option("-s", search_query, "Comma-separated list of search terms")->default_val("Hello,No Way,ge");
+    app.add_option("-s", search_query, "Comma-separated list of search terms")->default_val("Hello,No Way,ge,zucchini");
     // TODO: Add option for list of hash functions
 
     CLI11_PARSE(app, argc, argv);
@@ -149,4 +146,3 @@ int main(int argc, char **argv)
 
     return 0;
 }
-
