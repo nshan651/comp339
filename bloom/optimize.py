@@ -4,27 +4,51 @@
 import math, sys
 import subprocess as sp
 import typing
-# from tqdm import tqdm
+import matplotlib.pyplot as plt
+from tqdm import tqdm
 
 min_m: int = sys.maxsize
 min_k: int = 0
+n: int = 123985 
 #TODO: Derive this from the size of the words read from file
 n: int = 120000
-f_pos = []
+trial = []
 target_fpos = 0.05
 
+bits = []
+probs = []
 for k in range(2, 3):
-    for m in range(1000050, 0, -1):
-        prob: float = (1.0 - ((1.0 - 1.0/m)**(k*n))) ** k
+    for m in tqdm(range(1015150, n, -15000)):
+        f_prob: float = (1.0 - ((1.0 - 1.0/m)**(k*n))) ** k
         output = sp.check_output(
             f"./bin/bloom -m {m} -k {k} -s 'Hello,No Way,ge'", 
             shell=True
         )
-        f_pos = output.decode().rstrip().split(" ")
-        for fp in f_pos:
-            if float(fp) >= target_fpos:
-                print(f"m: {m} k: {k} false_pos: {fp}")
-                sys.exit(0) 
-        # print(k)
+        trial = output.decode().rstrip().split(" ")
 
-print(f_pos)
+        not_in = 0
+        for t in trial:
+            if float(t) == -1.0:
+                not_in+=1
+        print(f"not in {not_in}") 
+        probability = f_prob if not_in != len(trial) else 0
+        # probability = f_prob if trial[0] != -1 else 0
+
+        # probs.append(probability)
+        # bits.append(m)
+        probs.insert(0, probability)
+        bits.insert(0, m)
+        print(f"m: {m} k: {k} false_pos: {probability}")
+
+print(probs)
+
+### Line Plot
+
+fig, ax = plt.subplots()
+ax.plot(bits, probs)
+ax.set(xlabel='bits (m)', ylabel='false probability (p)',
+       title='Bloom Filter False Probabilities')
+ax.grid()
+
+# fig.savefig("test.png")
+plt.show()
