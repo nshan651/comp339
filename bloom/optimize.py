@@ -1,6 +1,5 @@
 #!/usr/bin/env python3
 # Script to optimize bits (m) and hashes (k)
-
 import math, sys
 import subprocess as sp
 import typing
@@ -18,7 +17,6 @@ target_fpos = 0.05
 bits = []
 probs = []
 for k in range(2, 3):
-    # for m in tqdm(range(1015150, n, -15000)):
     for m in tqdm(range(1015150, n, -1500)):
         f_prob: float = (1.0 - ((1.0 - 1.0/m)**(k*n))) ** k
         output = sp.check_output(
@@ -33,10 +31,7 @@ for k in range(2, 3):
                 not_in+=1
         print(f"not in {not_in}") 
         probability = f_prob if not_in != len(trial) else 0
-        # probability = f_prob if trial[0] != -1 else 0
 
-        # probs.append(probability)
-        # bits.append(m)
         probs.insert(0, probability)
         bits.insert(0, m)
         print(f"m: {m} k: {k} false_pos: {probability}")

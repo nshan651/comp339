@@ -16,6 +16,7 @@ public:
         Arguments:
             m | the number of bits
             k | the number of hash functions
+            hash_set | The set of hash functions to use
     */
     {
         this->m = m;
@@ -93,7 +94,11 @@ int init(const int m,
     while (infile >> word)
         bf->insert(word);
     infile.close();
-   
+    
+    /* set<double> uniques(bf->get_data().begin(), bf->get_data().end()); */
+    /* int collisions = sizeof(bf->get_data()) - uniques.size(); */
+    /* cout << "Collisions: " << collisions << endl; */
+
     /* Search all keywords */
     for (auto& keyword : keywords) 
         cout << bf->search(keyword) << " ";
@@ -104,14 +109,9 @@ int init(const int m,
     return 0;
 }
 
+
 int main(int argc, char **argv) 
 {
-    /* Define an array of hash functions to use */
-    vector<lamb_hash> hashes;
-    hashes.push_back(sha512);
-    hashes.push_back(whirlpool);
-    hashes.push_back(sha256);
-    hashes.push_back(ripemd160);
 
     int m = 0;
     int k = 0;
@@ -120,24 +120,20 @@ int main(int argc, char **argv)
     vector<string> keywords;
 
     CLI::App app("BloomFilter CLI");
-
-    /* app.add_option("-m", m, "Number of bits")->required(); */
     app.add_option("-m", m, "Number of bits")->default_val(100);
     app.add_option("-k", k, "Number of hash functions")->default_val(2);
     app.add_option("-i", input, "Input method")->default_val("./data/american-english");
-    app.add_option("-s", search_query, "Comma-separated list of search terms")->default_val("Hello,No Way,ge,zucchini");
+    app.add_option("-s", search_query, "Comma-separated list of search terms")->default_val("Hello,No Way,ge");
     // TODO: Add option for list of hash functions
-
     CLI11_PARSE(app, argc, argv);
+
+    vector<lamb_hash> hash_set = get_hashset(k);
 
     stringstream ss(search_query);
     string keyword;
     while (getline(ss, keyword, ','))
         keywords.push_back(keyword);
 
-    /* Slice the list of available hash functions according to k */
-    int end_slice = k < hashes.size() ? k : hashes.size();
-    const vector<lamb_hash> hash_set(hashes.begin(), hashes.begin() + end_slice);
 
     /* Init bloom filter */
     init(m, k, hash_set, input, keywords);

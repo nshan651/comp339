@@ -4,7 +4,6 @@
 #include <openssl/whrlpool.h>
 #include <openssl/ripemd.h>
 #include <openssl/evp.h>
-#include <blake2.h>
 
 using namespace std;
 
@@ -40,10 +39,18 @@ inline auto whirlpool = [](const string& word, const int m) -> size_t {
     return std::hash<string>{}(base64_hash) % m;
 };
 
-/* inline auto blake2 = [](const string& word, const int m) -> size_t { */
-/*     unsigned char hash[BLAKE2B_OUTBYTES]; */
-/*     blake2b(hash, word.c_str(), NULL, BLAKE2B_OUTBYTES, word.length(), 0); */
-/*     char base64_hash[BLAKE2B_OUTBYTES * 2]; */
-/*     EVP_EncodeBlock(reinterpret_cast<unsigned char*>(base64_hash), hash, BLAKE2B_OUTBYTES); */
-/*     return std::hash<string>{}(base64_hash) % m; */
-/* }; */
+/** Retrieve the hashset based on desired k */
+vector<lamb_hash> get_hashset(int k)
+{
+    /* Define an array of hash functions to use */
+    vector<lamb_hash> hashes;
+    hashes.push_back(sha512);
+    hashes.push_back(whirlpool);
+    hashes.push_back(sha256);
+    hashes.push_back(ripemd160);
+
+    /* Slice the list of available hash functions according to k */
+    const int end_slice = k < hashes.size() ? k : hashes.size();
+    const vector<lamb_hash> hash_set(hashes.begin(), hashes.begin() + end_slice);
+    return hash_set;
+}
