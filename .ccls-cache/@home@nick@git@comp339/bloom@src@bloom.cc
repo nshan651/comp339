@@ -9,6 +9,7 @@ class BloomFilter
     int m, k, n;
     vector<lamb_hash> hash_set;
     int *data;
+    int collisions;
 
 public:
     BloomFilter(const int m, const int k, const vector<lamb_hash> hash_set) 
@@ -23,6 +24,7 @@ public:
         this->k = k;
         this->n = 0;
         this->hash_set = hash_set;
+        this->collisions = 0;
 
         this->data = new int[m];
         memset(this->data, 0, m*sizeof(int));
@@ -31,10 +33,14 @@ public:
     void insert(const string& element)
     /** Insert hash into Bloom Filter. */
     {
+        bool collision = true;
         for (auto fun : hash_set) {
             size_t hash = fun(element, m) % m;
+            /* If all hashes are 1, a collision has occured */
+            if (data[hash] == 0) collision = false;
             data[hash] = 1;
         }
+        if (collision == true) collisions++;
         n++;
     }
 
@@ -70,6 +76,10 @@ public:
     {
         return k;
     }
+    int get_collisions()
+    {
+        return collisions;
+    }
 
     ~BloomFilter() 
     /** Destructor. */
@@ -97,11 +107,11 @@ int init(const int m,
     
     /* set<double> uniques(bf->get_data().begin(), bf->get_data().end()); */
     /* int collisions = sizeof(bf->get_data()) - uniques.size(); */
-    /* cout << "Collisions: " << collisions << endl; */
+    spdlog::info("Collisions: {}", bf->get_collisions());
 
     /* Search all keywords */
     for (auto& keyword : keywords) 
-        cout << bf->search(keyword) << " ";
+    spdlog::debug("{} ", bf->search(keyword));
 
     /* Deallocate when finished */
     delete bf; 
@@ -112,6 +122,8 @@ int init(const int m,
 
 int main(int argc, char **argv) 
 {
+
+    spdlog::set_level(spdlog::level::debug);
 
     int m = 0;
     int k = 0;
