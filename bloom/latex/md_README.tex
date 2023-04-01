@@ -1,0 +1,45 @@
+\hypertarget{md_README_autotoc_md1}{}\doxysection{Compiling}\label{md_README_autotoc_md1}
+
+\begin{DoxyItemize}
+\item For now, run this\+:
+\begin{DoxyItemize}
+\item {\ttfamily g++ -\/o bloom\+\_\+filter bloom.\+cc -\/lcrypto}
+\item Adds {\ttfamily libcrypto} library to linker
+\end{DoxyItemize}
+\end{DoxyItemize}\hypertarget{md_README_autotoc_md2}{}\doxysection{Optimal M and K Values}\label{md_README_autotoc_md2}
+
+\begin{DoxyItemize}
+\item Here is my analysis for the optimal bits for when \$k=2\$ and \$steps=-\/1500\$
+\end{DoxyItemize}
+
+\hypertarget{md_README_autotoc_md3}{}\doxysection{Notes}\label{md_README_autotoc_md3}
+
+\begin{DoxyItemize}
+\item Optimal hash functions\+:
+\begin{DoxyItemize}
+\item \$k = (\textbackslash{}frac\{m\}\{n\})$\ast$ln(2)\$
+\item \$m = \textbackslash{}frac\{(-\/n $\ast$ ln(p))\}\{(ln(2)$^\wedge$2)\}\$
+\end{DoxyItemize}
+\end{DoxyItemize}\hypertarget{md_README_autotoc_md4}{}\doxysubsection{Available Hash Functions}\label{md_README_autotoc_md4}
+
+\begin{DoxyItemize}
+\item Here are all the hash functions available in openssl\+:
+\begin{DoxyItemize}
+\item MD2
+\item MD4
+\item MD5
+\item SHA-\/1
+\item SHA-\/224
+\item SHA-\/256
+\item SHA-\/384
+\item SHA-\/512
+\item SHA-\/512/224
+\item SHA-\/512/256
+\item SHA3-\/224
+\item SHA3-\/256
+\item SHA3-\/384
+\item SHA3-\/512
+\item BLAKE2b-\/512
+\item BLAKE2s-\/256 
+\end{DoxyItemize}
+\end{DoxyItemize}

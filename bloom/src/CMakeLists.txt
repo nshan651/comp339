@@ -17,26 +17,13 @@ add_executable(
   bloom 
   bloom.cc
 )
-# target_compile_definitions(caeser_test PRIVATE -DSOME_MACRO)
+target_compile_definitions(bloom PRIVATE -DBLOOM)
 target_link_libraries(
   bloom PRIVATE CLI11::CLI11
   crypto
   fmt::fmt
   spdlog::spdlog
-  # common
 )
-
-# add_executable(
-#   cloud
-#   cloud.cc
-# )
-# # target_compile_definitions(caeser_test PRIVATE -DSOME_MACRO)
-# target_link_libraries(
-#   cloud PRIVATE CLI11::CLI11
-#   crypto
-#   b2
-#   # common
-# )
 
 # include(GoogleTest)
 # gtest_discover_tests(caeser_test)
