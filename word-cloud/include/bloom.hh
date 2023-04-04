@@ -10,3 +10,5 @@
 #include <sstream>
 #include <fmt/core.h>
 #include <spdlog/spdlog.h>
+
+int bloom(const int m, const int k, const std::string& search_query, const std::string& input);

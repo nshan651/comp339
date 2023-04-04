@@ -127,8 +127,7 @@ int bloom(const int m, const int k, const string& search_query, const string& in
     return collisions;
 }
 
-
-#ifdef MAIN
+#ifdef BLOOM 
 int main(int argc, char **argv) 
 {
     /* spdlog::set_level(spdlog::level::debug); */
