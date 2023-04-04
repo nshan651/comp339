@@ -10,16 +10,15 @@ set(CMAKE_CXX_FLAGS "${CMAKE_CXX_FLAGS} -Wno-deprecated-declarations")
 find_package(fmt REQUIRED)
 find_package(spdlog REQUIRED)
 
-# Common library
-# add_library(common SHARED lib.cc)
-
+# Main
 add_executable(
-  bloom 
+  main
   bloom.cc
 )
-target_compile_definitions(bloom PRIVATE -DBLOOM)
+target_compile_definitions(main PRIVATE -DMAIN)
 target_link_libraries(
-  bloom PRIVATE CLI11::CLI11
+  main PRIVATE 
+  CLI11::CLI11
   crypto
   fmt::fmt
   spdlog::spdlog

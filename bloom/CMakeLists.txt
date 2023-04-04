@@ -4,8 +4,7 @@ project(bloom_filter)
 
 set(CMAKE_BUILD_TYPE Debug)
 set(CMAKE_RUNTIME_OUTPUT_DIRECTORY ${CMAKE_BINARY_DIR}/bin)
-# GoogleTest requires at least C++11
-set(CMAKE_CXX_STANDARD 17)
+set(CMAKE_CXX_STANDARD 20)
 include_directories(include)
 
 include(FetchContent)
@@ -16,7 +15,6 @@ FetchContent_Declare(
 )
 # For Windows: Prevent overriding the parent project's compiler/linker settings
 set(gtest_force_shared_crt ON CACHE BOOL "" FORCE)
-FetchContent_MakeAvailable(googletest)
 
 # Fetch CLI11 from GitHub
 include(FetchContent)
@@ -25,8 +23,10 @@ FetchContent_Declare(
   GIT_REPOSITORY https://github.com/CLIUtils/CLI11.git
   GIT_TAG v2.2.0
 )
+
+# Fetch content
+FetchContent_MakeAvailable(googletest)
 FetchContent_MakeAvailable(CLI11)
 
 include_directories(${CLI11_DIR}/include)
-
 add_subdirectory(src)

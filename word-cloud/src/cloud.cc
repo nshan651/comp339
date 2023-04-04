@@ -1,19 +1,20 @@
+/* #include <cloud.hh> */
 #include <bloom.hh>
 #include <hash.hh>
 #include <CLI/CLI.hpp>
-
 #include <queue>
 #include <unordered_map>
 
 using namespace std;
 
+/*
 vector<pair<string, size_t>> top_n_words(const vector<string>& words, const size_t k, const int m)
 {
     vector<size_t> word_counts(256, 0); // initialize with a default size of 256, to cover all ASCII characters
     vector<pair<string, size_t>> top_n;
 
     for (const auto& word : words) {
-        size_t hashed_value = sha512(word, m);
+        // size_t hashed_value = sha512(word, m);
         ++word_counts[hashed_value];
 
         // Check if the word is already in the top_n vector
@@ -39,9 +40,13 @@ vector<pair<string, size_t>> top_n_words(const vector<string>& words, const size
 
     return top_n;
 }
+*/
 
-int main(int argc, char* argv[]) {
+/* int main(int argc, char* argv[]) { */
+/*     return 0; */
+/* } */
 
+    /*
     int window_size;
     string input;
 
@@ -63,7 +68,7 @@ int main(int argc, char* argv[]) {
     vector<size_t> word_count;
     vector<string> lookup;
     vector<string> words;
-    /* queue<pair<string, int>> sliding; */
+    // queue<pair<string, int>> sliding;
     queue<size_t> sliding;
     // Zero out both vecs
     for (int i = 0; i < n; i++) {
@@ -78,17 +83,17 @@ int main(int argc, char* argv[]) {
     string word;
     while (infile >> word) {
         words.push_back(word);
-        /* for (auto fun : hash_set) { */
-        /*     size_t hash = fun(word, m) % m; */
-        /*     word_count.insert(word_count.begin() + hash, */ 
-        /*         word_count[hash]+1); */
-        /*     lookup.insert(lookup.begin() + hash, */ 
-        /*         word); */
-        /*     sliding.push(hash); */
-        /* } */
+        for (auto fun : hash_set) {
+            size_t hash = fun(word, m) % m;
+            word_count.insert(word_count.begin() + hash, 
+                word_count[hash]+1);
+            lookup.insert(lookup.begin() + hash, 
+                word);
+            sliding.push(hash);
+        }
 
-        /* if (sliding.size() > window_size) */
-        /*     sliding.pop(); */
+        if (sliding.size() > window_size)
+            sliding.pop();
     }
 
     auto top_n = top_n_words(words, 10, m);
@@ -99,6 +104,4 @@ int main(int argc, char* argv[]) {
         cout << p.first << ": " << p.second << endl;
     }
 
-    return 0;
-
-}
+    */
