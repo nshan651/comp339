@@ -149,6 +149,8 @@ int main(int argc, char **argv)
     // Init bloom filter 
     bloom(m, k, search_query, input);
 
+    cout << "IN BLOOM MAIN" << endl;
+
     return 0;
 }
 #endif
